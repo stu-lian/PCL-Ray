@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Border x:Class="PCL.MyToast" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:svgIcon="clr-namespace:PCL.Core.UI.Controls.SvgIcon;assembly=PCL.Core" xmlns:local="clr-namespace:PCL" x:Name="Root" HorizontalAlignment="Right" CornerRadius="8" BorderThickness="0" UseLayoutRounding="True" SnapsToDevicePixels="True">
+  <UIElement.Effect>
+    <DropShadowEffect BlurRadius="16" Opacity="0.2" ShadowDepth="4" Direction="270" Color="#000000" />
+  </UIElement.Effect>
+  <Grid Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="*" />
+      <RowDefinition Height="3" />
+    </Grid.RowDefinitions>
+    <Grid Row="0" Margin="10,8,10,6">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="Auto" />
+        <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="Auto" />
+      </Grid.ColumnDefinitions>
+      <svgIcon:SvgIcon Name="ToastIcon" FrameworkElement.Width="20" FrameworkElement.Height="20" FrameworkElement.VerticalAlignment="Center" FrameworkElement.Margin="0,0,6,0" UseOriginalColor="False">
+        <!--Unknown connection ID: 3-->
+      </svgIcon:SvgIcon>
+      <TextBlock Name="TitleText" Grid.Column="1" VerticalAlignment="Center" FontSize="13" FontWeight="Bold" TextTrimming="CharacterEllipsis" />
+      <local:MyIconButton x:Name="BtnClose" Grid.Column="2" Width="20" Height="20" Margin="8,0,0,0" SvgIcon="lucide/x" Theme="Custom" />
+    </Grid>
+    <Rectangle Name="ProgressBar" Height="3" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" RenderTransformOrigin="0,0.5">
+      <UIElement.RenderTransform>
+        <ScaleTransform ScaleX="1" ScaleY="1" />
+      </UIElement.RenderTransform>
+    </Rectangle>
+  </Grid>
+</Border>

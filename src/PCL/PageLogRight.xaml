@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageLogRight" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+  <Grid>
+    <Grid Name="PanAllBack">
+      <local:MyCard x:Name="PanLogCard" Margin="16,16,16,100">
+        <local:MyScrollViewer x:Name="PanBack" Margin="12,40,12,20" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+          <RichTextBox Name="PanLog" FontSize="14" FontFamily="Consolas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderThickness="0" Background="#00FFFFFF" IsReadOnly="True" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" VirtualizingPanel.IsContainerVirtualizable="True" VirtualizingPanel.IsVirtualizingWhenGrouping="True" VirtualizingPanel.ScrollUnit="Pixel" />
+        </local:MyScrollViewer>
+      </local:MyCard>
+    </Grid>
+    <local:MyCard x:Name="CardOperation" Visibility="Visible" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,15,0,10" UseAnimation="False" HasMouseAnimation="True">
+      <StackPanel Margin="0,6,0,6">
+        <StackPanel Name="OperationsContainer" Orientation="Horizontal" Margin="10,8,10,8" HorizontalAlignment="Center">
+          <local:MyCheckBox x:Name="CheckAutoScroll" Margin="5,0,5,0" Text="{DynamicResource LogPage.Action.Scroll}" Checked="True" />
+          <local:MyIconTextButton x:Name="BtnOperationExport" Click="BtnOperationExport_Click" Margin="5,0,0,0" Text="{DynamicResource LogPage.Action.Export}" LogoScale="1" SvgIcon="lucide/save" />
+          <local:MyIconTextButton x:Name="BtnOperationClear" Click="BtnOperationClear_Click" Margin="5,0,0,0" Text="{DynamicResource LogPage.Action.Clear}" LogoScale="1.1" SvgIcon="lucide/trash-2" />
+          <local:MyIconTextButton x:Name="BtnOperationKill" Click="BtnOperationKill_Click" Margin="5,0,0,0" Text="{DynamicResource LogPage.Action.KillProcess}" LogoScale="0.85" SvgIcon="lucide/x" />
+          <local:MyIconTextButton x:Name="BtnOperationExportStackDump" Click="BtnOperationExportStackDump_Click" Margin="5,0,0,0" Text="{DynamicResource LogPage.Action.ExportStack}" LogoScale="0.85" SvgIcon="lucide/package" />
+        </StackPanel>
+        <Grid VerticalAlignment="Center" Margin="12,0,12,4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock Grid.Column="0" HorizontalAlignment="Left" Text="{DynamicResource LogPage.MaxLines.Title}" Margin="0,0,25,0" />
+          <local:MySlider x:Name="SliderMaxLog" Change="SliderMaxLog_ValueChanged" Grid.Column="1" HorizontalAlignment="Stretch" Tag="SystemMaxLog" MaxValue="29" Value="13" ToolTip="{DynamicResource LogPage.MaxLines.ToolTip}" />
+        </Grid>
+      </StackPanel>
+    </local:MyCard>
+  </Grid>
+</local:MyPageRight>

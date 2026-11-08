@@ -1,0 +1,26 @@
+namespace PCL.Core.Utils;
+
+public enum MachineType : ushort
+{
+	Unknown = 0,
+	I386 = 332,
+	IA64 = 512,
+	AMD64 = 34404,
+	ARM = 448,
+	ARM64 = 43620,
+	ARMNT = 452,
+	EFI_BYTECODE = 3772,
+	M32R = 36929,
+	MIPS16 = 614,
+	MIPSFPU = 870,
+	MIPSFPU16 = 1126,
+	POWERPC = 496,
+	POWERPCFP = 497,
+	R4000 = 358,
+	SH3 = 418,
+	SH3DSP = 419,
+	SH4 = 422,
+	SH5 = 424,
+	THUMB = 450,
+	WCEMIPSV2 = 361
+}

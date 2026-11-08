@@ -1,0 +1,245 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>PCL.Core</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <UseWPF>True</UseWPF>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LangVersion>14.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup />
+  <ItemGroup>
+    <Page Remove="app\localization\languages\en-gb.xaml" />
+    <Page Remove="app\localization\languages\en-us.xaml" />
+    <Page Remove="app\localization\languages\es-es.xaml" />
+    <Page Remove="app\localization\languages\fr-fr.xaml" />
+    <Page Remove="app\localization\languages\ja-jp.xaml" />
+    <Page Remove="app\localization\languages\zh-cn.xaml" />
+    <Page Remove="app\localization\languages\zh-tw.xaml" />
+    <Page Remove="PCL.Core.UI.Controls\MotdRenderer.xaml" />
+    <Page Include="app\localization\languages\en-gb.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="app/localization/languages/en-gb.xaml" />
+    <Page Include="app\localization\languages\en-us.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="app/localization/languages/en-us.xaml" />
+    <Page Include="app\localization\languages\es-es.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="app/localization/languages/es-es.xaml" />
+    <Page Include="app\localization\languages\fr-fr.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="app/localization/languages/fr-fr.xaml" />
+    <Page Include="app\localization\languages\ja-jp.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="app/localization/languages/ja-jp.xaml" />
+    <Page Include="app\localization\languages\zh-cn.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="app/localization/languages/zh-cn.xaml" />
+    <Page Include="app\localization\languages\zh-tw.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="app/localization/languages/zh-tw.xaml" />
+    <Page Include="PCL.Core.UI.Controls\MotdRenderer.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="ui/controls/motdrenderer.xaml" />
+    <Resource Remove="ui\assets\iconpacks\lucide\anvil.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\arrow-left.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\arrow-right-left.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\arrow-right.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\arrow-up-down.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\arrow-up-from-line.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\arrow-up-to-line.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\book-marked.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\box.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\boxes.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\bubbles.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\cat.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\chevron-left.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\chevron-right.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\chevrons-left.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\circle-check.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\circle-help.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\circle-minus.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\circle-plus.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\coffee.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\copy.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\download.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\earth.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\egg.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\ethernet-port.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\external-link.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\file-archive.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\file-box.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\file-input.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\flag.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\flask-conical.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\folder-input.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\folder-open.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\folder-plus.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\gauge.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\git-pull-request-arrow.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\globe.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\grid-2x2.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\hammer.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\heart-filled.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\heart-off.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\heart.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\image.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\info.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\layers.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\layout-dashboard.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\layout-list.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\link-2-off.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\link-2.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\list-x.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\list.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\log-out.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\message-circle.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\minus.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\monitor-cog.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\move-down.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\move-up.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\music.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\network.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\package-plus.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\package.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\palette.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\pencil.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\play.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\power.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\puzzle.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\refresh-cw.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\rocket.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\rotate-ccw.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\save.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\scroll-text.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\scroll.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\search.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\server.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\settings.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\share-2.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\shield-check.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\shirt.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\sparkles.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\tool-case.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\trash-2.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\triangle-alert.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\upload.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\user-plus.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\user.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\wrench.svg" />
+    <Resource Remove="ui\assets\iconpacks\lucide\x.svg" />
+    <Resource Remove="ui\assets\shaders\adaptiveblur.ps" />
+    <Resource Include="ui\assets\iconpacks\lucide\anvil.svg" LogicalName="ui/assets/iconpacks/lucide/anvil.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\arrow-left.svg" LogicalName="ui/assets/iconpacks/lucide/arrow-left.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\arrow-right-left.svg" LogicalName="ui/assets/iconpacks/lucide/arrow-right-left.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\arrow-right.svg" LogicalName="ui/assets/iconpacks/lucide/arrow-right.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\arrow-up-down.svg" LogicalName="ui/assets/iconpacks/lucide/arrow-up-down.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\arrow-up-from-line.svg" LogicalName="ui/assets/iconpacks/lucide/arrow-up-from-line.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\arrow-up-to-line.svg" LogicalName="ui/assets/iconpacks/lucide/arrow-up-to-line.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\book-marked.svg" LogicalName="ui/assets/iconpacks/lucide/book-marked.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\box.svg" LogicalName="ui/assets/iconpacks/lucide/box.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\boxes.svg" LogicalName="ui/assets/iconpacks/lucide/boxes.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\bubbles.svg" LogicalName="ui/assets/iconpacks/lucide/bubbles.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\cat.svg" LogicalName="ui/assets/iconpacks/lucide/cat.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\chevron-left.svg" LogicalName="ui/assets/iconpacks/lucide/chevron-left.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\chevron-right.svg" LogicalName="ui/assets/iconpacks/lucide/chevron-right.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\chevrons-left.svg" LogicalName="ui/assets/iconpacks/lucide/chevrons-left.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\circle-check.svg" LogicalName="ui/assets/iconpacks/lucide/circle-check.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\circle-help.svg" LogicalName="ui/assets/iconpacks/lucide/circle-help.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\circle-minus.svg" LogicalName="ui/assets/iconpacks/lucide/circle-minus.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\circle-plus.svg" LogicalName="ui/assets/iconpacks/lucide/circle-plus.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\coffee.svg" LogicalName="ui/assets/iconpacks/lucide/coffee.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\copy.svg" LogicalName="ui/assets/iconpacks/lucide/copy.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\download.svg" LogicalName="ui/assets/iconpacks/lucide/download.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\earth.svg" LogicalName="ui/assets/iconpacks/lucide/earth.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\egg.svg" LogicalName="ui/assets/iconpacks/lucide/egg.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\ethernet-port.svg" LogicalName="ui/assets/iconpacks/lucide/ethernet-port.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\external-link.svg" LogicalName="ui/assets/iconpacks/lucide/external-link.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\file-archive.svg" LogicalName="ui/assets/iconpacks/lucide/file-archive.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\file-box.svg" LogicalName="ui/assets/iconpacks/lucide/file-box.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\file-input.svg" LogicalName="ui/assets/iconpacks/lucide/file-input.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\flag.svg" LogicalName="ui/assets/iconpacks/lucide/flag.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\flask-conical.svg" LogicalName="ui/assets/iconpacks/lucide/flask-conical.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\folder-input.svg" LogicalName="ui/assets/iconpacks/lucide/folder-input.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\folder-open.svg" LogicalName="ui/assets/iconpacks/lucide/folder-open.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\folder-plus.svg" LogicalName="ui/assets/iconpacks/lucide/folder-plus.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\gauge.svg" LogicalName="ui/assets/iconpacks/lucide/gauge.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\git-pull-request-arrow.svg" LogicalName="ui/assets/iconpacks/lucide/git-pull-request-arrow.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\globe.svg" LogicalName="ui/assets/iconpacks/lucide/globe.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\grid-2x2.svg" LogicalName="ui/assets/iconpacks/lucide/grid-2x2.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\hammer.svg" LogicalName="ui/assets/iconpacks/lucide/hammer.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\heart-filled.svg" LogicalName="ui/assets/iconpacks/lucide/heart-filled.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\heart-off.svg" LogicalName="ui/assets/iconpacks/lucide/heart-off.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\heart.svg" LogicalName="ui/assets/iconpacks/lucide/heart.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\image.svg" LogicalName="ui/assets/iconpacks/lucide/image.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\info.svg" LogicalName="ui/assets/iconpacks/lucide/info.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\layers.svg" LogicalName="ui/assets/iconpacks/lucide/layers.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\layout-dashboard.svg" LogicalName="ui/assets/iconpacks/lucide/layout-dashboard.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\layout-list.svg" LogicalName="ui/assets/iconpacks/lucide/layout-list.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\link-2-off.svg" LogicalName="ui/assets/iconpacks/lucide/link-2-off.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\link-2.svg" LogicalName="ui/assets/iconpacks/lucide/link-2.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\list-x.svg" LogicalName="ui/assets/iconpacks/lucide/list-x.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\list.svg" LogicalName="ui/assets/iconpacks/lucide/list.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\log-out.svg" LogicalName="ui/assets/iconpacks/lucide/log-out.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\message-circle.svg" LogicalName="ui/assets/iconpacks/lucide/message-circle.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\minus.svg" LogicalName="ui/assets/iconpacks/lucide/minus.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\monitor-cog.svg" LogicalName="ui/assets/iconpacks/lucide/monitor-cog.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\move-down.svg" LogicalName="ui/assets/iconpacks/lucide/move-down.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\move-up.svg" LogicalName="ui/assets/iconpacks/lucide/move-up.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\music.svg" LogicalName="ui/assets/iconpacks/lucide/music.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\network.svg" LogicalName="ui/assets/iconpacks/lucide/network.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\package-plus.svg" LogicalName="ui/assets/iconpacks/lucide/package-plus.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\package.svg" LogicalName="ui/assets/iconpacks/lucide/package.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\palette.svg" LogicalName="ui/assets/iconpacks/lucide/palette.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\pencil.svg" LogicalName="ui/assets/iconpacks/lucide/pencil.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\play.svg" LogicalName="ui/assets/iconpacks/lucide/play.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\power.svg" LogicalName="ui/assets/iconpacks/lucide/power.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\puzzle.svg" LogicalName="ui/assets/iconpacks/lucide/puzzle.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\refresh-cw.svg" LogicalName="ui/assets/iconpacks/lucide/refresh-cw.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\rocket.svg" LogicalName="ui/assets/iconpacks/lucide/rocket.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\rotate-ccw.svg" LogicalName="ui/assets/iconpacks/lucide/rotate-ccw.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\save.svg" LogicalName="ui/assets/iconpacks/lucide/save.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\scroll-text.svg" LogicalName="ui/assets/iconpacks/lucide/scroll-text.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\scroll.svg" LogicalName="ui/assets/iconpacks/lucide/scroll.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\search.svg" LogicalName="ui/assets/iconpacks/lucide/search.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\server.svg" LogicalName="ui/assets/iconpacks/lucide/server.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\settings.svg" LogicalName="ui/assets/iconpacks/lucide/settings.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\share-2.svg" LogicalName="ui/assets/iconpacks/lucide/share-2.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\shield-check.svg" LogicalName="ui/assets/iconpacks/lucide/shield-check.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\shirt.svg" LogicalName="ui/assets/iconpacks/lucide/shirt.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\sparkles.svg" LogicalName="ui/assets/iconpacks/lucide/sparkles.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\tool-case.svg" LogicalName="ui/assets/iconpacks/lucide/tool-case.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\trash-2.svg" LogicalName="ui/assets/iconpacks/lucide/trash-2.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\triangle-alert.svg" LogicalName="ui/assets/iconpacks/lucide/triangle-alert.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\upload.svg" LogicalName="ui/assets/iconpacks/lucide/upload.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\user-plus.svg" LogicalName="ui/assets/iconpacks/lucide/user-plus.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\user.svg" LogicalName="ui/assets/iconpacks/lucide/user.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\wrench.svg" LogicalName="ui/assets/iconpacks/lucide/wrench.svg" />
+    <Resource Include="ui\assets\iconpacks\lucide\x.svg" LogicalName="ui/assets/iconpacks/lucide/x.svg" />
+    <Resource Include="ui\assets\shaders\adaptiveblur.ps" LogicalName="ui/assets/shaders/adaptiveblur.ps" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="CommunityToolkit.Mvvm"><HintPath>..\..\_bundle\CommunityToolkit.Mvvm.dll</HintPath></Reference>
+    <Reference Include="FluentValidation"><HintPath>..\..\_bundle\FluentValidation.dll</HintPath></Reference>
+    <Reference Include="PlainToolkit.CngProtectedData"><HintPath>..\..\_bundle\PlainToolkit.CngProtectedData.dll</HintPath></Reference>
+    <Reference Include="System.Management"><HintPath>..\..\_bundle\System.Management.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Data.Sqlite"><HintPath>..\..\_bundle\Microsoft.Data.Sqlite.dll</HintPath></Reference>
+    <Reference Include="ICSharpCode.SharpZipLib"><HintPath>..\..\_bundle\ICSharpCode.SharpZipLib.dll</HintPath></Reference>
+    <Reference Include="Wacton.Unicolour"><HintPath>..\..\_bundle\Wacton.Unicolour.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Xaml.Behaviors"><HintPath>..\..\_bundle\Microsoft.Xaml.Behaviors.dll</HintPath></Reference>
+    <Reference Include="fNbt"><HintPath>..\..\_bundle\fNbt.dll</HintPath></Reference>
+    <Reference Include="Ae.Dns.Protocol"><HintPath>..\..\_bundle\Ae.Dns.Protocol.dll</HintPath></Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt"><HintPath>..\..\_bundle\System.IdentityModel.Tokens.Jwt.dll</HintPath></Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens"><HintPath>..\..\_bundle\Microsoft.IdentityModel.Tokens.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions">
+      <HintPath>..\..\_bundle\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection">
+      <HintPath>..\..\_bundle\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Http">
+      <HintPath>..\..\_bundle\Microsoft.Extensions.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Polly"><HintPath>..\..\_bundle\Polly.dll</HintPath></Reference>
+    <Reference Include="Ae.Dns.Client"><HintPath>..\..\_bundle\Ae.Dns.Client.dll</HintPath></Reference>
+    <Reference Include="Humanizer"><HintPath>..\..\_bundle\Humanizer.dll</HintPath></Reference>
+    <Reference Include="Sentry"><HintPath>..\..\_bundle\Sentry.dll</HintPath></Reference>
+    <Reference Include="STUN"><HintPath>..\..\_bundle\STUN.dll</HintPath></Reference>
+    <Reference Include="LiteDB"><HintPath>..\..\_bundle\LiteDB.dll</HintPath></Reference>
+    <Reference Include="YamlDotNet"><HintPath>..\..\_bundle\YamlDotNet.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+      <HintPath>..\..\_bundle\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Caching"><HintPath>..\..\_bundle\System.Runtime.Caching.dll</HintPath></Reference>
+  </ItemGroup>
+</Project>
+
+

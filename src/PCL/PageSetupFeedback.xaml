@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageSetupFeedback" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL" PanScroll="{Binding ElementName=PanBack}">
+  <local:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Name="PanMain" Margin="25,25,25,25">
+      <local:MyCard x:Name="PanInfo" Title="{DynamicResource Setup.Feedback.Submit.Title}">
+        <StackPanel Orientation="Vertical" Margin="20,40,18,22">
+          <TextBlock Text="{DynamicResource Setup.Feedback.Submit.Description}" TextWrapping="Wrap" />
+          <Grid Margin="0,15,0,0" Height="35">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+              <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+              <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+              <ColumnDefinition Width="Auto" SharedSizeGroup="Button" />
+            </Grid.ColumnDefinitions>
+            <local:MyButton x:Name="BtnManageOpen" Click="Feedback_Click" Grid.Column="0" MinWidth="140" Text="{DynamicResource Setup.Feedback.Submit.Open}" Padding="13,0" Margin="0,0,20,0" HorizontalAlignment="Left" ColorType="Highlight" />
+          </Grid>
+        </StackPanel>
+      </local:MyCard>
+      <StackPanel Name="PanContent" Margin="0,15,0,0">
+        <local:MyCard x:Name="PanContentProcessing" Title="{DynamicResource Setup.Feedback.Status.Processing}" Margin="0,0,0,15" CanSwap="True">
+          <StackPanel Name="PanListProcessing" Orientation="Vertical" Margin="20,36,18,18" />
+        </local:MyCard>
+        <local:MyCard x:Name="PanContentWaitingProcess" Title="{DynamicResource Setup.Feedback.Status.WaitingProcess}" Margin="0,0,0,15" CanSwap="True">
+          <StackPanel Name="PanListWaitingProcess" Orientation="Vertical" Margin="20,36,18,18" />
+        </local:MyCard>
+        <local:MyCard x:Name="PanContentWait" Title="{DynamicResource Setup.Feedback.Status.Waiting}" Margin="0,0,0,15" CanSwap="True">
+          <StackPanel Name="PanListWait" Orientation="Vertical" Margin="20,36,18,18" />
+        </local:MyCard>
+        <local:MyCard x:Name="PanContentPause" Title="{DynamicResource Setup.Feedback.Status.Paused}" Margin="0,0,0,15" CanSwap="True">
+          <StackPanel Name="PanListPause" Orientation="Vertical" Margin="20,36,18,18" />
+        </local:MyCard>
+        <local:MyCard x:Name="PanContentUpnext" Title="{DynamicResource Setup.Feedback.Status.UpNext}" Margin="0,0,0,15" CanSwap="True">
+          <StackPanel Name="PanListUpnext" Orientation="Vertical" Margin="20,36,18,18" />
+        </local:MyCard>
+        <local:MyCard x:Name="PanContentCompleted" Title="{DynamicResource Setup.Feedback.Status.Completed}" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
+          <StackPanel Name="PanListCompleted" Orientation="Vertical" Margin="20,36,18,18" />
+        </local:MyCard>
+        <local:MyCard x:Name="PanContentDecline" Title="{DynamicResource Setup.Feedback.Status.Declined}" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
+          <StackPanel Name="PanListDecline" Orientation="Vertical" Margin="20,36,18,18" />
+        </local:MyCard>
+        <local:MyCard x:Name="PanContentIgnored" Title="{DynamicResource Setup.Feedback.Status.Ignored}" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
+          <StackPanel Name="PanListIgnored" Orientation="Vertical" Margin="20,36,18,18" />
+        </local:MyCard>
+        <local:MyCard x:Name="PanContentDuplicate" Title="{DynamicResource Setup.Feedback.Status.Duplicate}" Margin="0,0,0,15" CanSwap="True" IsSwapped="True">
+          <StackPanel Name="PanListDuplicate" Orientation="Vertical" Margin="20,36,18,18" />
+        </local:MyCard>
+      </StackPanel>
+      <local:MyCard x:Name="PanLoad" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" UseAnimation="False" Margin="40,50">
+        <local:MyLoading x:Name="Load" Text="{DynamicResource Setup.Feedback.Loading}" Margin="20,20,20,17" HorizontalAlignment="Center" VerticalAlignment="Center" />
+      </local:MyCard>
+    </StackPanel>
+  </local:MyScrollViewer>
+</local:MyPageRight>

@@ -1,0 +1,857 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>种子地图</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html,body { width:100%; height:100%; overflow:hidden; background:#17191D; color:#E8E8E8;
+    font-family:"Microsoft YaHei UI","Segoe UI",system-ui,sans-serif; }
+  #toolbar { display:flex; align-items:center; gap:8px; padding:8px 12px; background:#23262D;
+    border-bottom:1px solid #33363F; flex-wrap:wrap; }
+  #toolbar label { font-size:12px; color:#B0B4BF; white-space:nowrap; }
+  input[type=text], select { background:#17191D; border:1px solid #3A3E49; color:#E8E8E8;
+    padding:4px 7px; border-radius:4px; font-size:12px; outline:none; }
+  input[type=text]:focus, select:focus { border-color:#4A8CF7; }
+  #seed { width:150px; }
+  #coord { width:110px; }
+  button { background:#2C3F66; border:1px solid #3A5A95; color:#FFF; padding:5px 10px;
+    border-radius:4px; font-size:12px; cursor:pointer; white-space:nowrap; }
+  button:hover { background:#35507F; }
+  button.on { background:#3F6FB5; border-color:#5A8FE0; }
+  .sep { width:1px; height:20px; background:#3A3E49; }
+  #status { font-size:12px; color:#9AA0AD; margin-left:auto; overflow:hidden;
+    text-overflow:ellipsis; white-space:nowrap; max-width:36%; }
+  #wrap { position:relative; width:100%; height:calc(100% - 46px); overflow:hidden; background:#17191D; }
+  #map { position:absolute; inset:0; width:100%; height:100%; cursor:grab; }
+  #map.dragging { cursor:grabbing; }
+  #hint { position:absolute; left:12px; bottom:10px; font-size:12px; color:#8A909C;
+    background:rgba(23,25,29,.82); padding:4px 10px; border-radius:4px; pointer-events:none; max-width:72%; }
+  #zoombar { position:absolute; right:12px; top:12px; display:flex; flex-direction:column; gap:6px; }
+  #zoombar button { padding:4px 10px; font-size:15px; }
+  #tooltip { position:absolute; pointer-events:none; background:rgba(15,17,24,.94);
+    border:1px solid #3A3E49; border-radius:5px; padding:7px 9px; font-size:12px;
+    color:#E8E8E8; white-space:pre; z-index:5; box-shadow:0 4px 14px rgba(0,0,0,.5); }
+  #layerPanel { position:absolute; right:12px; top:52px; width:236px; max-height:74%;
+    overflow:auto; background:rgba(23,25,29,.96); border:1px solid #33363F; border-radius:6px;
+    padding:10px 12px; font-size:12px; z-index:6; }
+  #layerPanel h4 { font-size:12px; color:#9AA0AD; margin:6px 0 6px; font-weight:600; }
+  #layerPanel h4:first-child { margin-top:0; }
+  #layerPanel label { display:flex; align-items:center; gap:7px; margin:3px 0; cursor:pointer;
+    color:#C8CCD6; font-size:12px; }
+  #layerPanel label img { width:16px; height:16px; object-fit:contain; image-rendering:auto; }
+  #layerPanel input { accent-color:#4A8CF7; }
+  #markerInput { position:absolute; z-index:7; background:#1B1D23; border:1px solid #4A8CF7;
+    border-radius:5px; padding:8px; font-size:12px; display:flex; gap:6px; align-items:center; }
+  #markerInput input[type=text] { width:150px; }
+</style>
+</head>
+<body>
+<div id="toolbar">
+  <label>种子</label>
+  <input id="seed" type="text" placeholder="输入数字或文本种子" value="">
+  <button id="random" title="随机种子">随机</button>
+  <label>维度</label>
+  <select id="dimension">
+    <option value="0">主世界</option>
+    <option value="-1">下界</option>
+    <option value="1">末地</option>
+  </select>
+  <label>版本</label>
+  <select id="version"></select>
+  <label>模式</label>
+  <select id="mode">
+    <option value="biome">群系</option>
+    <option value="terrain">地形</option>
+  </select>
+  <button id="go">回到出生点</button>
+  <span class="sep"></span>
+  <input id="coord" type="text" placeholder="x,z 跳转" title="输入坐标如 100,-200 后回车跳转">
+  <button id="layerBtn">结构图层</button>
+  <span id="status">正在初始化引擎…</span>
+</div>
+<div id="wrap">
+  <canvas id="map"></canvas>
+  <div id="zoombar">
+    <button id="zin" title="放大">+</button>
+    <button id="zout" title="缩小">−</button>
+  </div>
+  <div id="hint">左键拖拽移动 · 滚轮缩放 · 悬停查看坐标/群系/海拔 · Shift+左键添加标记 · Alt+左键删除标记</div>
+</div>
+<script type="module">import * as Comlink from './comlink.mjs';
+
+// Minecraft 自 26.x 起改为新的年份式版本号（26.1 / 26.2 ...），不再是 1.2x.x。
+// 传给 wasm 的必须是真实 major/minor：写成 1.26 会被引擎当成 1.26 这个不存在的版本，
+// 结果只剩海洋与森林。btree 数据与官方一致，按 26.2 / 26.3 / 26.4 的阈值选取。
+const VERSIONS = [
+  { label: '1.19 – 1.19.3',   major: 1, minor: 19, patch: 0, tree: 'btree192.dat' },
+  { label: '1.19.4 – 1.19.x', major: 1, minor: 19, patch: 4, tree: 'btree19.dat' },
+  { label: '1.20 – 1.21.4',   major: 1, minor: 20, patch: 0, tree: 'btree20.dat' },
+  { label: '1.21.5 – 1.21.11', major: 1, minor: 21, patch: 5, tree: 'btree215.dat' },
+  { label: '26.1 – 26.2',     major: 26, minor: 1, patch: 0, tree: 'btree262.dat' },
+  { label: '26.3',            major: 26, minor: 3, patch: 0, tree: 'btree263.dat' },
+  { label: '26.4+',           major: 26, minor: 4, patch: 0, tree: 'btree264s3.dat' },
+];
+
+const FEATURES = [
+  { kind:'village',         type:5,  dims:[0],    maxScale:16, label:'村庄',         icon:'village.webp' },
+  { kind:'outpost',         type:10, dims:[0],    maxScale:64, label:'掠夺者前哨站', icon:'pillager_outpost.webp' },
+  { kind:'shipwreck',       type:7,  dims:[0],    maxScale:16, label:'沉船',         icon:'shipwreck.webp' },
+  { kind:'monument',        type:8,  dims:[0],    maxScale:16, label:'海底神殿',     icon:'ocean_monument.webp' },
+  { kind:'mansion',         type:9,  dims:[0],    maxScale:64, label:'林地府邸',     icon:'woodland_mansion.webp' },
+  { kind:'ancient-city',    type:13, dims:[0],    maxScale:16, label:'远古城市',     icon:'ancient_city.webp' },
+  { kind:'trail-ruins',     type:23, dims:[0],    maxScale:16, label:'考古遗迹',     icon:'trail_ruin.webp' },
+  { kind:'trial-chambers',  type:24, dims:[0],    maxScale:4,  label:'试炼密室',     icon:'trial_chambers.webp' },
+  { kind:'ruined-portal',   type:11, dims:[0,-1], maxScale:4,  label:'废弃传送门',   icon:'ruined_portal.webp' },
+  { kind:'desert-pyramid',  type:1,  dims:[0],    maxScale:16, label:'沙漠神殿',     icon:'desert_pyramid.webp' },
+  { kind:'jungle-temple',   type:2,  dims:[0],    maxScale:16, label:'丛林神庙',     icon:'jungle_temple.webp' },
+  { kind:'swamp-hut',       type:3,  dims:[0],    maxScale:16, label:'沼泽小屋',     icon:'swamp_hut.webp' },
+  { kind:'igloo',           type:4,  dims:[0],    maxScale:16, label:'雪屋',         icon:'igloo.webp' },
+  { kind:'ocean-ruin',      type:6,  dims:[0],    maxScale:4,  label:'海底废墟',     icon:'ocean_ruin.webp' },
+  { kind:'buried-treasure', type:14, dims:[0],    maxScale:16, label:'埋藏的宝藏',   icon:'buried_treasure.webp' },
+  { kind:'mineshaft',       type:15, dims:[0],    maxScale:4,  label:'废弃矿井',     icon:'mineshaft.webp' },
+  { kind:'desert-well',     type:16, dims:[0],    maxScale:16, label:'沙漠水井',     icon:'desert_well.webp' },
+  { kind:'geode',           type:17, dims:[0],    maxScale:4,  label:'紫水晶洞',     icon:'amethyst_geode.webp' },
+  { kind:'fortress',        type:18, dims:[-1],   maxScale:64, label:'下界要塞',     icon:'nether_fortress.webp' },
+  { kind:'bastion',         type:19, dims:[-1],   maxScale:16, label:'堡垒遗迹',     icon:'bastion_remnant.webp' },
+  { kind:'end-city',        type:20, dims:[1],    maxScale:16, label:'末地城',       icon:'end_city.webp' },
+  { kind:'end-gateway',     type:21, dims:[1],    maxScale:4,  label:'末地折跃门',   icon:'end_gateway.webp' },
+  { kind:'abandoned-camp',  type:25, dims:[0],    maxScale:16, label:'废弃营地',     icon:'abandoned_camp.png' },
+  { kind:'nether-fossil',   type:12, dims:[-1],   maxScale:4,  label:'下界化石',     icon:'nether_fossil.png' },
+];
+const FEATURE_BY_TYPE = new Map(FEATURES.map(f => [f.type, f]));
+const ICON_ROOT = 'structures/';
+
+// Axolotl 对齐的下界/末地调色板（cubiomes biome id -> 0xRRGGBB）
+const DIM_PALETTES = {
+  [-1]: { size: 174, colors: { 8:0x572526, 170:0x4D3A2E, 171:0x981A11, 172:0x49907B, 173:0x645F63 } },
+  [1]:  { size: 44,  colors: { 9:0x8080FF, 40:0x4B4BAB, 41:0xC9C959, 42:0xB5B536, 43:0x7070CC } },
+};
+function buildDimensionPalette(dim) {
+  const spec = DIM_PALETTES[dim];
+  if (!spec) return null;
+  const arr = new Uint32Array(spec.size);
+  for (const k of Object.keys(spec.colors)) arr[parseInt(k, 10)] = spec.colors[k] >>> 0;
+  return arr;
+}
+let appliedPaletteDim = null;
+async function applyDimensionPalette(dim) {
+  if (appliedPaletteDim === dim) return;
+  const arr = buildDimensionPalette(dim);
+  if (!arr) { appliedPaletteDim = dim; return; }
+  await Promise.all(poolApi.map(a => a.setColors(Array.from(arr))));
+  appliedPaletteDim = dim;
+}
+
+const BIOME_NAMES = {
+  0:'海洋',1:'平原',2:'沙漠',3:'风袭丘陵',4:'森林',5:'针叶林',6:'沼泽',7:'河流',
+  8:'下界荒地',9:'末地',10:'冰冻海洋',11:'冻河',12:'雪原',14:'蘑菇岛',16:'沙滩',
+  21:'丛林',23:'稀疏丛林',24:'深海',25:'石岸',26:'积雪沙滩',27:'桦木森林',29:'黑森林',
+  30:'积雪针叶林',32:'原始松木针叶林',34:'风袭森林',35:'热带草原',36:'热带高原',37:'恶地',
+  38:'繁茂恶地',40:'末地小岛',41:'末地内陆',42:'末地高地',43:'末地荒地',44:'暖水海洋',
+  45:'温水海洋',46:'冷水海洋',48:'深温水海洋',49:'深冷水海洋',50:'深冻海洋',
+  129:'向日葵平原',131:'风袭沙砾丘陵',132:'繁花森林',140:'冰刺之地',155:'原始桦木森林',
+  160:'原始云杉针叶林',163:'风袭热带草原',165:'被风蚀的恶地',168:'竹林',170:'灵魂沙峡谷',
+  171:'绯红森林',172:'诡异森林',173:'玄武岩三角洲',174:'溶洞',175:'繁茂洞穴',177:'草甸',
+  178:'雪林',179:'雪坡',180:'裸岩山峰',181:'冰封山峰',182:'尖峭山峰',183:'深暗之域',
+  184:'红树林沼泽',185:'樱花树林',186:'苍白花园',187:'硫磺洞穴',188:'斑驳森林',
+};
+
+const $ = (id) => document.getElementById(id);
+const status = (s) => { $('status').textContent = s; };
+
+const qp = new URLSearchParams(location.search);
+const canvas = $('map');
+const ctx = canvas.getContext('2d');
+
+const TILE_PIXELS = 256;
+const TILE_SCALES = [1, 4, 16, 64, 256];
+const MAX_ZOOM_STEP = 2; // 1px = 16 方块；更远时 wasm 逐点采样会产生雪花噪点
+const CACHE_BYTES = 48 * 1024 * 1024;
+const TILE_CONCURRENCY = 4; // 实际会由 initWorkers 按线程数上调
+
+let poolApi = [];
+let poolPtr = 0;
+let currentTree = null;
+let confKey = '';
+let spawn = null;
+let strongholds = [];
+
+let view = { cx: 0, cz: 0 };
+let zoomStep = 1;
+let renderMode = 'biome';
+let structureLayerOpen = false;
+
+const tileCache = new Map();
+let cacheBytes = 0;
+let inFlight = new Map();
+let queue = [];
+let drawEpoch = 0;
+let markers = [];
+const MARKERS_KEY = 'pclray.mapviewer.markers.v1';
+
+// 与 Axolotl 的默认图层一致：先打开最常用的几个结构，避免打开地图一片空白
+const DEFAULT_FEATURES = ['village', 'ruined-portal', 'fortress', 'bastion', 'end-city', 'stronghold'];
+const featureEnabled = {};
+for (const f of FEATURES) featureEnabled[f.type] = DEFAULT_FEATURES.includes(f.kind);
+
+const featureIcons = new Map();
+const spawnIcon = { image: null };
+
+const structureCache = [];
+let structEpoch = 0;
+
+function maxZoomStep() { return MAX_ZOOM_STEP; }
+// 这个 wasm 在 1px>=64 方块时不做面积平均，逐点采样会得到雪花噪点（Axolotl 用专门的
+// surface-biome / Voronoi 路径解决）。我们无法改 wasm，因此远景统一用 scale=16 渲染，
+// 再在画布上放大显示，既平滑又快。
+function renderScale() { return Math.min(tileScale(), 16); }
+function blocksPerPixel() { return TILE_SCALES[Math.min(zoomStep, maxZoomStep())]; }
+function versionSel() { return VERSIONS[$('version').selectedIndex] || VERSIONS[2]; }
+function dimension() { return parseInt($('dimension').value, 10) || 0; }
+function seedText() { return $('seed').value.trim() || '0'; }
+
+function hashSeed() {
+  const s = seedText();
+  if (/^-?\d+$/.test(s)) return BigInt.asIntN(64, BigInt(s));
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (Math.imul(h, 31) + s.charCodeAt(i)) | 0;
+  return BigInt.asIntN(64, BigInt(h >>> 0));
+}
+
+function tileScale() { return TILE_SCALES[Math.min(zoomStep, maxZoomStep())]; }
+
+function worldToScreen(wx, wz, w, h) {
+  const bpp = blocksPerPixel();
+  return { x: (wx - view.cx) / bpp + w / 2, y: (wz - view.cz) / bpp + h / 2 };
+}
+function screenToWorld(sx, sy, w, h) {
+  const bpp = blocksPerPixel();
+  return { x: view.cx + (sx - w / 2) * bpp, z: view.cz + (sy - h / 2) * bpp };
+}
+function visibleBounds() {
+  const bpp = blocksPerPixel();
+  const w = canvas.width || 512, h = canvas.height || 512;
+  return {
+    minX: view.cx - (w / 2) * bpp, maxX: view.cx + (w / 2) * bpp,
+    minZ: view.cz - (h / 2) * bpp, maxZ: view.cz + (h / 2) * bpp,
+  };
+}
+
+function preloadIcons() {
+  for (const f of FEATURES) {
+    const img = new Image();
+    img.onload = () => { featureIcons.set(f.type, img); redraw(); };
+    img.src = ICON_ROOT + f.icon;
+  }
+  const sp = new Image();
+  sp.onload = () => { spawnIcon.image = sp; redraw(); };
+  sp.src = ICON_ROOT + 'spawn_point.webp';
+}
+
+function workerCount() {
+  const cores = Math.max(1, Math.floor(navigator.hardwareConcurrency || 4));
+  return Math.max(2, Math.min(6, cores - 1));
+}
+function initWorkers() {
+  for (let i = 0; i < workerCount(); i++) poolApi.push(Comlink.wrap(new Worker('worker.js')));
+}
+
+async function initEngine() {
+  initWorkers();
+  await Promise.all(poolApi.map(a => a.initialize('mcseedmap.wasm')));
+  const sel = $('version');
+  VERSIONS.forEach(v => { const o = document.createElement('option'); o.textContent = v.label; sel.appendChild(o); });
+  if (qp.get('seed')) $('seed').value = qp.get('seed');
+  const qv = qp.get('v');
+  if (qv) {
+    const mm = qv.split(/[._]/);
+    const vmaj = parseInt(mm[0], 10), vmin = parseInt(mm[1], 10), vpat = parseInt(mm[2] || '0', 10);
+    let best = 2, bestScore = Infinity;
+    VERSIONS.forEach((v, i) => {
+      const score = Math.abs(v.major - vmaj) * 10000 + Math.abs(v.minor - vmin) * 100 + Math.abs(v.patch - vpat);
+      if (score < bestScore) { bestScore = score; best = i; }
+    });
+    sel.selectedIndex = best;
+  } else sel.selectedIndex = 2;
+  const qzs = qp.get('zs');
+  if (qzs !== null) zoomStep = Math.max(0, Math.min(MAX_ZOOM_STEP, parseInt(qzs, 10) || 0));
+  const qd = qp.get('d');
+  if (qd !== null) {
+    const dsel = $('dimension');
+    for (let i = 0; i < dsel.options.length; i++)
+      if (parseInt(dsel.options[i].value, 10) === parseInt(qd, 10)) { dsel.selectedIndex = i; break; }
+  }
+  status('引擎就绪');
+}
+
+async function ensureConfigured() {
+  const v = versionSel();
+  const seed = hashSeed();
+  const dim = dimension();
+  const key = seed + '|' + v.tree + '|' + dim;
+  if (key === confKey) return;
+  confKey = key;
+  clearTiles();
+  spawn = null; strongholds = []; structureCache.length = 0;
+  await Promise.all(poolApi.map(async (a) => {
+    await a.configure(seed, TILE_PIXELS, 0, v.major, v.minor, v.patch, dim, false);
+    if (currentTree !== v.tree) {
+      const buf = await (await fetch(v.tree)).arrayBuffer();
+      await a.setBiomeTree(new Uint8Array(buf), v.tree);
+    }
+    await a.setHighlighterStyles([{ circles: [] }, { circles: [] }]);
+  }));
+  currentTree = v.tree;
+  appliedPaletteDim = null;
+  await applyDimensionPalette(dim);
+  try {
+    const sp = await poolApi[0].getSpawn();
+    if (sp && sp.length >= 2) spawn = [sp[0], sp[1]];
+    const sh = await poolApi[0].getStrongholds();
+    strongholds = sh ? Array.from(sh) : [];
+  } catch (e) { spawn = null; strongholds = []; }
+  refreshStructures();
+}
+
+function tileKey(scale, x, z, pixels) { return renderMode + '|' + scale + '|' + pixels + '|' + x + '|' + z; }
+
+function clearTiles() {
+  queue = [];
+  inFlight = new Map();
+  for (const t of tileCache.values()) { try { t.bitmap.close(); } catch (e) {} }
+  tileCache.clear();
+  cacheBytes = 0;
+}
+
+function bmpToImageData(u8) {
+  const dim = (u8[18] | u8[19] << 8 | u8[20] << 16 | u8[21] << 24) >>> 0;
+  const height = (u8[22] | u8[23] << 8 | u8[24] << 16 | u8[25] << 24) | 0;
+  const h = Math.abs(height);
+  const size = dim * h * 4;
+  const src = new Uint8ClampedArray(u8.buffer, u8.byteOffset + 54, size);
+  const out = new Uint8ClampedArray(size);
+  const flip = height > 0;
+  for (let y = 0; y < h; y++) {
+    const sbase = (flip ? h - 1 - y : y) * dim * 4;
+    const base = y * dim * 4;
+    for (let x = 0; x < dim; x++) {
+      const si = sbase + x * 4, di = base + x * 4;
+      out[di] = src[si + 2]; out[di + 1] = src[si + 1];
+      out[di + 2] = src[si]; out[di + 3] = src[si + 3];
+    }
+  }
+  return new ImageData(out, dim, h);
+}
+
+async function renderTile(scale, tx, tz, pixels) {
+  const a = poolApi[poolPtr++ % poolApi.length];
+  const zoom = -Math.log2(scale);
+  // 下界/末地没有地形高度，使用纯群系着色（shader=0），避免出现错乱的地形阴影
+  const dim = dimension();
+  // 主世界使用地形着色（shader=2）以获得起伏感，等高线仅在大比例尺（近景）时叠加；
+  // 下界与末地没有地形高度，使用纯群系着色（shader=0），与 Axolotl 的调色板保持一致。
+  const isOverworld = dim === 0;
+  const contour = (renderMode === 'terrain' && isOverworld && scale <= 16) ? 1 : 0;
+  const shader = isOverworld ? 2 : 0;
+  const rgba = await a.generateBiomeImage(zoom, tx * pixels * scale, tz * pixels * scale,
+    2147483647, shader, contour, false, false, false, new Uint16Array(0), new Uint16Array(0), -2145904616, 185, false);
+  const raw = new Uint8Array(rgba);
+  if (raw.length < 58 || raw[0] !== 66 || raw[1] !== 77) throw new Error('瓦片数据无效');
+  return await createImageBitmap(bmpToImageData(raw));
+}
+
+function pumpTiles(epoch) {
+  if (epoch !== drawEpoch) return;
+  while (queue.length && inFlight.size < Math.min(TILE_CONCURRENCY, poolApi.length)) {
+    const job = queue.shift();
+    inFlight.set(job.key, job);
+    void (async () => {
+      try {
+        const bitmap = await renderTile(job.scale, job.tx, job.tz, job.pixels);
+        if (epoch !== drawEpoch) { try { bitmap.close(); } catch (e) {} return; }
+        const bytes = job.pixels * job.pixels * 4;
+        tileCache.set(job.key, { bitmap, bytes, scale: job.scale, x: job.tx, z: job.tz, pixels: job.pixels });
+        cacheBytes += bytes;
+        pruneTiles();
+        updateStatus();
+        redraw();
+      } catch (e) {
+        if (epoch === drawEpoch) status('瓦片渲染失败: ' + (e && e.message || e));
+      } finally {
+        inFlight.delete(job.key);
+        if (epoch === drawEpoch) updateStatus();
+        pumpTiles(epoch);
+      }
+    })();
+  }
+}
+
+function pruneTiles() {
+  if (cacheBytes <= CACHE_BYTES) return;
+  const b = visibleBounds();
+  const visible = (t) => {
+    const s = t.scale * t.pixels;
+    return t.x * s < b.maxX && (t.x + 1) * s > b.minX && t.z * s < b.maxZ && (t.z + 1) * s > b.minZ;
+  };
+  const entries = [...tileCache.entries()].sort((x, y) => (visible(x[1]) ? 1 : 0) - (visible(y[1]) ? 1 : 0));
+  for (const [k, t] of entries) {
+    if (cacheBytes <= CACHE_BYTES) break;
+    try { t.bitmap.close(); } catch (e) {}
+    tileCache.delete(k);
+    cacheBytes -= t.bytes;
+  }
+}
+
+let rafPending = null;
+function redraw() {
+  if (rafPending) return;
+  rafPending = requestAnimationFrame(() => { rafPending = null; drawMap(); });
+}
+
+function resizeCanvas() {
+  const dpr = Math.min(2, window.devicePixelRatio || 1);
+  const cw = Math.max(1, $('wrap').clientWidth);
+  const ch = Math.max(1, $('wrap').clientHeight);
+  const w = Math.round(cw * dpr), h = Math.round(ch * dpr);
+  if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
+  canvas.style.width = cw + 'px';
+  canvas.style.height = ch + 'px';
+}
+
+function drawMap() {
+  resizeCanvas();
+  const w = canvas.width, h = canvas.height;
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.clearRect(0, 0, w, h);
+  ctx.fillStyle = '#17191D';
+  ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = '#23262D';
+  const cell = 32;
+  for (let y = 0; y < h; y += cell)
+    for (let x = 0; x < w; x += cell)
+      if (((x / cell) + (y / cell)) % 2 === 0) ctx.fillRect(x, y, cell, cell);
+
+  drawTiles(w, h);
+  drawFeatures(w, h);
+  drawSpawn(w, h);
+  drawMarkers(w, h);
+}
+
+function drawTiles(w, h) {
+  const bpp = blocksPerPixel();
+  const scale = renderScale();
+  const b = visibleBounds();
+  const tiles = [];
+  for (const t of tileCache.values()) {
+    const s = t.scale * t.pixels;
+    if (t.x * s < b.maxX && (t.x + 1) * s > b.minX && t.z * s < b.maxZ && (t.z + 1) * s > b.minZ) tiles.push(t);
+  }
+  // 目标缩放级别的瓦片必须最后绘制（在最上层），否则旧的低分辨率瓦片会盖在上面变成雪花噪点
+  tiles.sort((a, b2) => (b2.scale === scale ? 1 : 0) - (a.scale === scale ? 1 : 0) || b2.scale - a.scale);
+  ctx.imageSmoothingEnabled = false;
+  for (const t of tiles) {
+    const span = t.scale * t.pixels;
+    const px = (t.x * span - view.cx) / bpp + w / 2;
+    const py = (t.z * span - view.cz) / bpp + h / 2;
+    ctx.drawImage(t.bitmap, px, py, span / bpp, span / bpp);
+  }
+  ctx.imageSmoothingEnabled = true;
+}
+
+function updateStatus() {
+  const pending = queue.length + inFlight.size;
+  if (pending) { status('加载地图瓦片… ' + pending + ' 待渲染 / ' + tileCache.size + ' 已缓存'); return; }
+  status('中心 ' + Math.round(view.cx) + ', ' + Math.round(view.cz) +
+    (spawn ? ' · 出生点 ' + spawn[0] + ', ' + spawn[1] : '') +
+    (structureCache.length ? ' · 结构 ' + structureCache.length + ' 个' : ''));
+}
+function requestTiles(cancelInFlight) {
+  if (cancelInFlight) { drawEpoch++; queue = []; }
+  // 必须先按真实窗口尺寸调整 canvas，否则会用默认的 300x150 计算可见范围，
+  // 导致只请求中间一小块瓦片，视野外围永远是空白。
+  resizeCanvas();
+  const epoch = drawEpoch;
+  const scale = renderScale();
+  const pixels = TILE_PIXELS;
+  const span = scale * pixels;
+  const b = visibleBounds();
+  const want = [];
+  for (let x = Math.floor(b.minX / span); x <= Math.floor(b.maxX / span); x++)
+    for (let z = Math.floor(b.minZ / span); z <= Math.floor(b.maxZ / span); z++)
+      want.push([x, z]);
+  const dist = ([x, z]) => (x * span + span / 2 - view.cx) ** 2 + (z * span + span / 2 - view.cz) ** 2;
+  want.sort((a, b2) => dist(a) - dist(b2));
+  // 这个 wasm 的瓦片分辨率固定为 256（由 configure 决定），所以再做一层 64px 预览不会省算力，
+  // 只会让工作量翻倍。平移/缩放时的过渡直接复用缓存里上一级的瓦片即可。
+  for (const [x, z] of want) {
+    const k = tileKey(scale, x, z, pixels);
+    if (tileCache.has(k) || inFlight.has(k) || queue.some(j => j.key === k)) continue;
+    queue.push({ key: k, scale, tx: x, tz: z, pixels });
+  }
+  if (queue.length) status('加载地图瓦片… ' + queue.length + ' 待渲染 / ' + tileCache.size + ' 已缓存');
+  else status('中心 ' + Math.round(view.cx) + ', ' + Math.round(view.cz) +
+    (spawn ? ' · 出生点 ' + spawn[0] + ', ' + spawn[1] : ''));
+  pumpTiles(epoch);
+}
+
+function refreshStructures() {
+  const epoch = ++structEpoch;
+  structureCache.length = 0;
+  const dim = dimension();
+  const enabled = FEATURES.filter(f => featureEnabled[f.type] && f.dims.includes(dim));
+  if (!enabled.length) { redraw(); return; }
+  resizeCanvas();
+  const b = visibleBounds();
+  const pad = Math.ceil((b.maxX - b.minX) * 0.5);
+  const x1 = Math.floor(b.minX - pad), x2 = Math.ceil(b.maxX + pad);
+  const z1 = Math.floor(b.minZ - pad), z2 = Math.ceil(b.maxZ + pad);
+  void (async () => {
+    for (const f of enabled) {
+      try {
+        const a = poolApi[poolPtr++ % poolApi.length];
+        const raw = await a.getStructuresAt(x1, z1, x2, z2, f.type);
+        if (epoch !== structEpoch) return;
+        const arr = raw ? Array.from(raw) : [];
+        for (let i = 0; i + 3 < arr.length; i += 4) structureCache.push({ type: f.type, x: arr[i], z: arr[i + 1] });
+      } catch (e) {}
+    }
+    if (epoch === structEpoch) redraw();
+  })();
+}
+
+function drawFeatures(w, h) {
+  const scale = blocksPerPixel();
+  for (const s of structureCache) {
+    const def = FEATURE_BY_TYPE.get(s.type);
+    if (!def || scale > def.maxScale) continue;
+    const p = worldToScreen(s.x, s.z, w, h);
+    if (p.x < -28 || p.x > w + 28 || p.y < -28 || p.y > h + 28) continue;
+    const icon = featureIcons.get(s.type);
+    // 近景图标更大，远景略小，避免地图上一片糊成小方块
+    const size = scale <= 4 ? 34 : scale <= 16 ? 28 : 22;
+    ctx.save();
+    if (icon) {
+      ctx.shadowColor = 'rgba(0,0,0,0.48)';
+      ctx.shadowBlur = 5;
+      ctx.shadowOffsetY = 2;
+      ctx.drawImage(icon, p.x - size / 2, p.y - size / 2, size, size);
+    } else {
+      ctx.fillStyle = '#8793A4';
+      ctx.strokeStyle = 'rgba(15,18,20,0.86)';
+      ctx.lineWidth = 2;
+      ctx.beginPath(); ctx.arc(p.x, p.y, 8, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '700 9px system-ui';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(def.label.slice(0, 1), p.x, p.y);
+    }
+    ctx.restore();
+  }
+}
+
+function drawSpawn(w, h) {
+  if (spawn && dimension() === 0) {
+    const p = worldToScreen(spawn[0], spawn[1], w, h);
+    if (p.x > -40 && p.x < w + 40 && p.y > -40 && p.y < h + 40) {
+      const size = 32;
+      ctx.save();
+      if (spawnIcon.image) {
+        ctx.shadowColor = 'rgba(0,0,0,0.48)';
+        ctx.shadowBlur = 5; ctx.shadowOffsetY = 2;
+        ctx.drawImage(spawnIcon.image, p.x - size / 2, p.y - size / 2, size, size);
+      } else {
+        ctx.fillStyle = '#2E3138'; ctx.strokeStyle = '#FFFFFF'; ctx.lineWidth = 2;
+        ctx.beginPath(); ctx.arc(p.x, p.y, 10, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+      }
+      ctx.restore();
+    }
+  }
+}
+
+const FONT = '600 12px system-ui';
+
+function loadMarkers() {
+  try { const s = localStorage.getItem(MARKERS_KEY); if (s) markers = JSON.parse(s); } catch (e) { markers = []; }
+  if (!Array.isArray(markers)) markers = [];
+}
+function saveMarkers() { try { localStorage.setItem(MARKERS_KEY, JSON.stringify(markers)); } catch (e) {} }
+
+function drawMarkers(w, h) {
+  if (!markers.length) return;
+  ctx.save();
+  for (const m of markers) {
+    const p = worldToScreen(m.x, m.z, w, h);
+    if (p.x < -40 || p.x > w + 40 || p.y < -50 || p.y > h + 40) continue;
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.bezierCurveTo(-3, -5, -11, -15, -11, -19);
+    ctx.bezierCurveTo(-11, -25, -6, -30, 0, -30);
+    ctx.bezierCurveTo(6, -30, 11, -25, 11, -19);
+    ctx.bezierCurveTo(11, -15, 3, -5, 0, 0);
+    ctx.closePath();
+    ctx.lineJoin = 'round';
+    ctx.shadowColor = 'rgba(0,0,0,0.5)';
+    ctx.shadowBlur = 4; ctx.shadowOffsetY = 2;
+    ctx.fillStyle = m.color || '#22C55E';
+    ctx.fill();
+    ctx.shadowColor = 'transparent';
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+    if (m.name) {
+      ctx.font = FONT;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = 'rgba(0,0,0,0.85)';
+      ctx.fillStyle = '#FFFFFF';
+      ctx.strokeText(m.name, p.x, p.y - 42);
+      ctx.fillText(m.name, p.x, p.y - 42);
+    }
+  }
+  ctx.restore();
+}
+
+const tooltip = document.createElement('div');
+tooltip.id = 'tooltip';
+tooltip.style.display = 'none';
+$('wrap').appendChild(tooltip);
+
+let hoverTimer = null, hoverPoint = null;
+
+function updateHover(e) {
+  const rect = canvas.getBoundingClientRect();
+  const dpr = canvas.width / rect.width;
+  const wpt = screenToWorld((e.clientX - rect.left) * dpr, (e.clientY - rect.top) * dpr, canvas.width, canvas.height);
+  hoverPoint = { x: Math.round(wpt.x), z: Math.round(wpt.z), sx: e.clientX, sy: e.clientY };
+  if (hoverTimer) clearTimeout(hoverTimer);
+  hoverTimer = setTimeout(async () => {
+    const p = hoverPoint;
+    if (!p) return;
+    try {
+      await ensureConfigured();
+      const a = poolApi[poolPtr++ % poolApi.length];
+      let biome = null, height = null;
+      try { biome = await a.getBiomeAt(p.x, p.z, 2147483647); } catch (e2) {}
+      try { height = await a.getSurfaceHeight(p.x, p.z); } catch (e2) {}
+      if (hoverPoint !== p) return;
+      const lines = ['坐标 X ' + p.x + '  Z ' + p.z];
+      if (biome !== null && BIOME_NAMES[biome]) lines.push('群系: ' + BIOME_NAMES[biome]);
+      else if (biome !== null) lines.push('群系 id: ' + biome);
+      if (height !== null) lines.push('海拔 Y ' + height);
+      for (const s of structureCache) {
+        if (Math.hypot(s.x - p.x, s.z - p.z) * blocksPerPixel() < 16) {
+          const def = FEATURE_BY_TYPE.get(s.type);
+          if (def) lines.push('结构: ' + def.label);
+          break;
+        }
+      }
+      tooltip.style.display = 'block';
+      tooltip.style.left = Math.min(p.sx + 14, window.innerWidth - 200) + 'px';
+      tooltip.style.top = Math.min(p.sy + 14, window.innerHeight - 100) + 'px';
+      tooltip.textContent = lines.join('\n');
+    } catch (e2) { tooltip.style.display = 'none'; }
+  }, 90);
+}
+
+let dragging = false, lastX = 0, lastY = 0, moved = false;
+
+canvas.addEventListener('mousedown', (e) => {
+  if (e.button !== 0) return;
+  const rect = canvas.getBoundingClientRect();
+  const dpr = canvas.width / rect.width;
+  const wpt = screenToWorld((e.clientX - rect.left) * dpr, (e.clientY - rect.top) * dpr, canvas.width, canvas.height);
+  if (e.shiftKey) { showMarkerInput(e.clientX, e.clientY, Math.round(wpt.x), Math.round(wpt.z)); return; }
+  if (e.altKey) {
+    const idx = markers.findIndex(m => Math.hypot(m.x - wpt.x, m.z - wpt.z) * blocksPerPixel() < 16);
+    if (idx >= 0) { markers.splice(idx, 1); saveMarkers(); redraw(); }
+    return;
+  }
+  dragging = true; moved = false; lastX = e.clientX; lastY = e.clientY;
+  canvas.classList.add('dragging');
+});
+
+window.addEventListener('mousemove', (e) => {
+  if (dragging) {
+    const bpp = blocksPerPixel();
+    const rect = canvas.getBoundingClientRect();
+    const dpr = canvas.width / rect.width;
+    const dx = (e.clientX - lastX) * dpr * bpp;
+    const dy = (e.clientY - lastY) * dpr * bpp;
+    lastX = e.clientX; lastY = e.clientY;
+    if (Math.abs(dx) + Math.abs(dy) > 0.01) moved = true;
+    view.cx -= dx; view.cz -= dy;
+    redraw();
+    return;
+  }
+  updateHover(e);
+});
+
+window.addEventListener('mouseup', () => {
+  if (dragging) {
+    dragging = false;
+    canvas.classList.remove('dragging');
+    if (moved) refreshStructures();
+  }
+});
+
+canvas.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const rect = canvas.getBoundingClientRect();
+  const dpr = canvas.width / rect.width;
+  const sx = (e.clientX - rect.left) * dpr;
+  const sy = (e.clientY - rect.top) * dpr;
+  const anchor = screenToWorld(sx, sy, canvas.width, canvas.height);
+  const oldStep = zoomStep;
+  zoomStep = Math.max(0, Math.min(maxZoomStep(), zoomStep + (e.deltaY < 0 ? -1 : 1)));
+  if (zoomStep === oldStep) return;
+  const bpp = blocksPerPixel();
+  view.cx = anchor.x - (sx - canvas.width / 2) * bpp;
+  view.cz = anchor.z - (sy - canvas.height / 2) * bpp;
+  redraw();
+  refreshStructures();
+}, { passive: false });
+
+canvas.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; hoverPoint = null; });
+canvas.addEventListener('contextmenu', (e) => e.preventDefault());
+
+let markerDraft = null;
+function showMarkerInput(sx, sy, x, z) {
+  hideMarkerInput();
+  const box = document.createElement('div');
+  box.id = 'markerInput';
+  box.style.left = Math.min(sx, window.innerWidth - 240) + 'px';
+  box.style.top = Math.min(sy, window.innerHeight - 70) + 'px';
+  const input = document.createElement('input');
+  input.type = 'text'; input.placeholder = '标记名称'; input.maxLength = 24;
+  const color = document.createElement('input');
+  color.type = 'color'; color.value = '#22C55E';
+  const ok = document.createElement('button');
+  ok.textContent = '确定';
+  ok.onclick = () => {
+    markers.push({ x, z, name: input.value.trim() || ('标记 ' + (markers.length + 1)), color: color.value });
+    saveMarkers(); hideMarkerInput(); redraw();
+  };
+  const cancel = document.createElement('button');
+  cancel.textContent = '取消';
+  cancel.onclick = hideMarkerInput;
+  box.appendChild(input); box.appendChild(color); box.appendChild(ok); box.appendChild(cancel);
+  $('wrap').appendChild(box);
+  input.focus();
+  markerDraft = { box };
+}
+function hideMarkerInput() { if (markerDraft && markerDraft.box) markerDraft.box.remove(); markerDraft = null; }
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hideMarkerInput(); });
+
+$('go').addEventListener('click', async () => {
+  await ensureConfigured();
+  if (spawn && spawn.length >= 2) { view.cx = spawn[0]; view.cz = spawn[1]; }
+  else { view.cx = 0; view.cz = 0; }
+  requestTiles(true); redraw(); refreshStructures();
+});
+$('random').addEventListener('click', () => {
+  const rnd = new Uint32Array(2);
+  crypto.getRandomValues(rnd);
+  $('seed').value = ((BigInt(rnd[1]) << 32n) | BigInt(rnd[0])).toString();
+  confKey = ''; redraw();
+});
+$('zin').addEventListener('click', () => {
+  const old = zoomStep;
+  zoomStep = Math.max(0, zoomStep - 1);
+  if (zoomStep !== old) { requestTiles(true); redraw(); refreshStructures(); }
+});
+$('zout').addEventListener('click', () => {
+  const old = zoomStep;
+  zoomStep = Math.min(maxZoomStep(), zoomStep + 1);
+  if (zoomStep !== old) { requestTiles(true); redraw(); refreshStructures(); }
+});
+$('coord').addEventListener('keydown', (e) => {
+  if (e.key !== 'Enter') return;
+  const m = $('coord').value.trim().split(/[,，\s]+/).map(Number);
+  if (m.length >= 2 && Number.isFinite(m[0]) && Number.isFinite(m[1])) {
+    view.cx = m[0]; view.cz = m[1];
+    requestTiles(true); redraw(); refreshStructures();
+  }
+});
+$('seed').addEventListener('change', () => { confKey = ''; requestTiles(true); redraw(); });
+$('dimension').addEventListener('change', () => { confKey = ''; zoomStep = Math.min(zoomStep, maxZoomStep()); rebuildStructurePanel(); requestTiles(true); redraw(); });
+$('version').addEventListener('change', () => { confKey = ''; requestTiles(true); redraw(); });
+$('mode').addEventListener('change', () => { renderMode = $('mode').value; clearTiles(); requestTiles(true); redraw(); });
+// 分享功能已移除
+// 读取存档功能已移除
+
+function rebuildStructurePanel() {
+  let panel = $('layerPanel');
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = 'layerPanel';
+    panel.style.display = 'none';
+    $('wrap').appendChild(panel);
+  }
+  panel.innerHTML = '';
+  const dim = dimension();
+  for (const f of FEATURES.filter(x => x.dims.includes(dim))) {
+    const label = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = !!featureEnabled[f.type];
+    cb.onchange = () => { featureEnabled[f.type] = cb.checked; refreshStructures(); };
+    const img = document.createElement('img');
+    img.src = ICON_ROOT + f.icon;
+    img.alt = '';
+    const span = document.createElement('span');
+    span.textContent = f.label;
+    const hint = document.createElement('span');
+    hint.style.cssText = 'margin-left:auto;color:#6F7683;font-size:10px';
+    hint.textContent = '1:' + f.maxScale;
+    label.appendChild(cb); label.appendChild(img); label.appendChild(span); label.appendChild(hint);
+    panel.appendChild(label);
+  }
+  panel.style.display = structureLayerOpen ? 'block' : 'none';
+}
+
+$('layerBtn').addEventListener('click', () => {
+  structureLayerOpen = !structureLayerOpen;
+  $('layerBtn').classList.toggle('on', structureLayerOpen);
+  rebuildStructurePanel();
+  if (structureLayerOpen) refreshStructures();
+});
+
+function onHostMessage(raw) {
+  const d = raw && raw.data !== undefined ? raw.data : raw;
+  if (d && d.type === 'seed-from-level' && d.seed !== undefined && d.seed !== null) {
+    $('seed').value = String(d.seed);
+    confKey = '';
+    status('已从存档读取种子: ' + d.seed);
+    redraw();
+  } else if (d && d.type === 'seed-import-cancel') {
+    status('已取消读取存档');
+  }
+}
+if (window.chrome?.webview?.addEventListener) {
+  window.chrome.webview.addEventListener('message', (e) => onHostMessage(e.data));
+} else {
+  window.addEventListener('message', (e) => onHostMessage(e.data));
+}
+
+window.addEventListener('resize', () => redraw());
+loadMarkers();
+preloadIcons();
+rebuildStructurePanel();
+try {
+  await initEngine();
+  await ensureConfigured();
+  if (spawn && spawn.length >= 2) { view.cx = spawn[0]; view.cz = spawn[1]; }
+  requestTiles(true); redraw();
+} catch (e) {
+  status('初始化失败: ' + (e && e.message || e));
+  console.error(e);
+}
+</script>
+</body>
+</html>

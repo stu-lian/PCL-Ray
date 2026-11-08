@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageToolsColorCode" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" PanScroll="{Binding ElementName=PanBack}">
+  <local:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Name="PanMain" Margin="25,10">
+      <local:MyHint Text="{DynamicResource Tools.ColorCode.Hint}" Theme="Blue" Margin="0,0,0,15" MinHeight="36" />
+      <local:MyCard Margin="0,0,0,15" Title="{DynamicResource Tools.ColorCode.Title}">
+        <StackPanel Margin="25,32,25,12">
+          <TextBlock Text="{DynamicResource Tools.ColorCode.Description}" TextWrapping="Wrap" Foreground="{StaticResource ColorBrushGray3}" />
+          <TextBlock Text="{DynamicResource Tools.ColorCode.Input}" Margin="0,14,0,6" Opacity="0.85" />
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <local:MyTextBox x:Name="TextInput" MinWidth="200" MaxLength="600" TextChanged="TextInput_TextChanged" />
+            <local:MyButton x:Name="BtnCopy" Grid.Column="1" Click="BtnCopy_Click" Width="120" Text="{DynamicResource Common.Action.Copy}" Margin="14,0,0,0" />
+          </Grid>
+          <Grid Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="Sample0" Grid.Row="0" Margin="3,4" FontFamily="Consolas" Text="&amp;0 黑色" />
+            <TextBlock x:Name="Sample1" Grid.Row="1" Margin="3,4" FontFamily="Consolas" Text="&amp;1 深蓝" />
+            <TextBlock x:Name="Sample2" Grid.Row="2" Margin="3,4" FontFamily="Consolas" Text="&amp;2 深绿" />
+            <TextBlock x:Name="Sample3" Grid.Row="3" Margin="3,4" FontFamily="Consolas" Text="&amp;3 湖蓝" />
+            <TextBlock x:Name="Sample4" Grid.Row="4" Margin="3,4" FontFamily="Consolas" Text="&amp;4 红色" />
+            <TextBlock x:Name="Sample5" Grid.Row="0" Grid.Column="1" Margin="3,4" FontFamily="Consolas" Text="&amp;5 紫色" />
+            <TextBlock x:Name="Sample6" Grid.Row="1" Grid.Column="1" Margin="3,4" FontFamily="Consolas" Text="&amp;6 金色" />
+            <TextBlock x:Name="Sample7" Grid.Row="2" Grid.Column="1" Margin="3,4" FontFamily="Consolas" Text="&amp;7 灰色" />
+            <TextBlock x:Name="Sample8" Grid.Row="3" Grid.Column="1" Margin="3,4" FontFamily="Consolas" Text="&amp;8 深灰" />
+            <TextBlock x:Name="Sample9" Grid.Row="4" Grid.Column="1" Margin="3,4" FontFamily="Consolas" Text="&amp;9 蓝色" />
+            <TextBlock x:Name="SampleA" Grid.Row="0" Grid.Column="2" Margin="3,4" FontFamily="Consolas" Text="&amp;a 绿色" />
+            <TextBlock x:Name="SampleB" Grid.Row="1" Grid.Column="2" Margin="3,4" FontFamily="Consolas" Text="&amp;b 青色" />
+            <TextBlock x:Name="SampleC" Grid.Row="2" Grid.Column="2" Margin="3,4" FontFamily="Consolas" Text="&amp;c 红色" />
+            <TextBlock x:Name="SampleD" Grid.Row="3" Grid.Column="2" Margin="3,4" FontFamily="Consolas" Text="&amp;d 粉色" />
+            <TextBlock x:Name="SampleE" Grid.Row="4" Grid.Column="2" Margin="3,4" FontFamily="Consolas" Text="&amp;e 黄色" />
+            <TextBlock x:Name="SampleF" Grid.Row="0" Grid.Column="3" Margin="3,4" FontFamily="Consolas" Text="&amp;f 白色" />
+            <TextBlock x:Name="SampleK" Grid.Row="1" Grid.Column="3" Margin="3,4" FontFamily="Consolas" Text="&amp;k 随机(闪烁)" />
+            <TextBlock x:Name="SampleL" Grid.Row="2" Grid.Column="3" Margin="3,4" FontFamily="Consolas" Text="&amp;l 粗体" />
+            <TextBlock x:Name="SampleM" Grid.Row="3" Grid.Column="3" Margin="3,4" FontFamily="Consolas" Text="&amp;m 删除线" />
+            <TextBlock x:Name="SampleN" Grid.Row="4" Grid.Column="3" Margin="3,4" FontFamily="Consolas" Text="&amp;n 下划线" />
+          </Grid>
+          <Rectangle Height="1" Fill="{StaticResource ColorBrushGray3}" Opacity="0.35" Margin="0,8,0,8" />
+          <TextBlock x:Name="LabPreview" FontFamily="Consolas" FontSize="16" TextWrapping="Wrap" />
+        </StackPanel>
+      </local:MyCard>
+    </StackPanel>
+  </local:MyScrollViewer>
+</local:MyPageRight>

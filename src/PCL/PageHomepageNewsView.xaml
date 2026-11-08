@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageHomepageNewsView" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:behaviors="clr-namespace:Microsoft.Xaml.Behaviors;assembly=Microsoft.Xaml.Behaviors" xmlns:core="clr-namespace:PCL.Core.UI.Controls;assembly=PCL.Core" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:i="http://schemas.microsoft.com/xaml/behaviors" xmlns:local="clr-namespace:PCL" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:vm="clr-namespace:PCL.Core.ViewModel.Homepage;assembly=PCL.Core" MinWidth="150">
+  <FrameworkElement.DataContext>
+    <vm:NewsViewModel />
+  </FrameworkElement.DataContext>
+  <Grid>
+    <ItemsControl ItemsSource="{Binding NewsItems}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <core:WaterfallPanel FrameworkElement.Margin="0,0,0,10" ColumnSpacing="14" LayoutMode="AutoFit" MaxItemWidth="240" RowSpacing="14" VirtualizingPanel.CacheLengthUnit="Item" VirtualizingPanel.IsVirtualizing="True" VirtualizingPanel.VirtualizationMode="Recycling" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <local:MyCard>
+            <Grid Margin="12">
+              <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+              </Grid.RowDefinitions>
+              <local:MyImage HorizontalAlignment="Stretch" CornerRadius="6" SnapsToDevicePixels="True" Stretch="UniformToFill" UseLayoutRounding="True" Source="{Binding Image}" ToolTip="{Binding ImageAltText}" />
+              <Border Grid.Row="1" Margin="0,5,0,0" Background="{DynamicResource ColorBrushBackground}" ClipToBounds="True" CornerRadius="6" Padding="5,3">
+                <TextBlock FontSize="16" FontWeight="Bold" Foreground="{DynamicResource ColorBrush1}" TextWrapping="Wrap" Text="{Binding Title}" />
+              </Border>
+              <Grid Row="2" Margin="0,5,0,0">
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Foreground="{DynamicResource ColorBrushGray2}" Text="{Binding Author}" />
+                <TextBlock Grid.Column="1" Foreground="{DynamicResource ColorBrushGray2}" Text="{Binding PublishDate, Converter={StaticResource LocalizationFormatConverter}, ConverterParameter=g}" />
+              </Grid>
+              <TextBlock Grid.Row="3" Margin="0,5,0,0" Foreground="{DynamicResource ColorBrushGray4}" TextWrapping="Wrap" Text="{Binding Description}" />
+              <local:MyTextButton Grid.Row="4" Margin="0,5,5,0" HorizontalAlignment="Right" Foreground="{DynamicResource ColorBrushGray2}" Text="{DynamicResource Launch.Homepage.News.ViewDetail}">
+                <behaviors:Interaction.Triggers>
+                  <behaviors:EventTrigger EventName="Click">
+                    <behaviors:InvokeCommandAction Command="{Binding DataContext.OpenReadCommand, RelativeSource={RelativeSource AncestorType=local:MyPageRight}}" CommandParameter="{Binding Url}" />
+                  </behaviors:EventTrigger>
+                </behaviors:Interaction.Triggers>
+              </local:MyTextButton>
+            </Grid>
+          </local:MyCard>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <TextBlock Foreground="{DynamicResource ColorBrushRedLight}" Text="{Binding ErrorMessage}" Visibility="{Binding ErrorMessage, Converter={StaticResource NullToVisibilityConverter}}" />
+    <local:MyCard Margin="32" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+      <local:MyLoading x:Name="Load" Text="{DynamicResource Launch.Homepage.News.Loading}" Margin="20,20,20,17" />
+    </local:MyCard>
+  </Grid>
+</local:MyPageRight>

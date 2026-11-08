@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Grid x:Class="PCL.MinecraftServer" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:controls="clr-namespace:PCL.Core.UI.Controls;assembly=PCL.Core" xmlns:pcl="clr-namespace:PCL">
+  <Grid.ColumnDefinitions>
+    <ColumnDefinition Width="Auto" />
+    <ColumnDefinition Width="*" />
+    <ColumnDefinition Width="Auto" />
+  </Grid.ColumnDefinitions>
+  <Image Name="ImgServerLogo" Grid.Column="0" Margin="6" Width="54" Height="54" />
+  <TextBlock Name="LabServerDesc" Grid.Column="1" Margin="6" TextWrapping="Wrap" FontSize="15" Foreground="#FFFFFFFF" />
+  <controls:MotdRenderer Name="MotdRenderer" Grid.Column="1" FrameworkElement.Margin="0,20,3,1" UIElement.IsHitTestVisible="False" FrameworkElement.Width="300" FrameworkElement.Height="Auto" FrameworkElement.VerticalAlignment="Center">
+    <!--Unknown connection ID: 3-->
+  </controls:MotdRenderer>
+  <StackPanel Grid.Column="2" Margin="6" HorizontalAlignment="Right">
+    <TextBlock Name="LabServerPlayer" HorizontalAlignment="Right" TextAlignment="Right" FontSize="12" Foreground="#FFFFFFFF" />
+    <TextBlock Name="LabServerLatency" HorizontalAlignment="Right" TextAlignment="Right" FontSize="12" Foreground="#FFFFFFFF" />
+  </StackPanel>
+</Grid>

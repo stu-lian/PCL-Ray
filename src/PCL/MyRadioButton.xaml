@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Border x:Class="PCL.MyRadioButton" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:svgIcon="clr-namespace:PCL.Core.UI.Controls.SvgIcon;assembly=PCL.Core" x:Name="PanBack" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{StaticResource ColorBrushSemiTransparent}" CornerRadius="13.5" MinHeight="27" MaxHeight="27" xmlns:pcl="clr-namespace:PCL">
+  <StackPanel Orientation="Horizontal">
+    <Grid Name="LogoHost" Width="16" Height="16" Margin="12,0,0,0" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Center" HorizontalAlignment="Left">
+      <UIElement.RenderTransform>
+        <ScaleTransform />
+      </UIElement.RenderTransform>
+      <Path Name="ShapeLogo" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Uniform" Fill="#FFFFFFFF" />
+      <svgIcon:SvgIcon Name="ShapeSvgIcon" Stretch="Uniform" UIElement.Visibility="Collapsed" IconBrush="{Binding Fill, ElementName=ShapeLogo}">
+        <!--Unknown connection ID: 4-->
+      </svgIcon:SvgIcon>
+    </Grid>
+    <TextBlock Name="LabText" VerticalAlignment="Center" Foreground="#FFFFFFFF" Margin="8,0,12,0" SnapsToDevicePixels="False" UseLayoutRounding="False" />
+  </StackPanel>
+</Border>

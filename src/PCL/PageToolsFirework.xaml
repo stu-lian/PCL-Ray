@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageToolsFirework" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" PanScroll="{Binding ElementName=PanBack}">
+  <local:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Name="PanMain" Margin="25,10">
+      <local:MyHint Text="配置烟花火箭的飞行时间与多组爆炸效果，生成 1.21.5+ 组件指令，并给出生存模式的合成步骤。" Theme="Blue" Margin="0,0,0,15" MinHeight="36" />
+      <local:MyCard Margin="0,0,0,15" Title="火箭">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock Text="飞行时间" Margin="0,0,0,6" Opacity="0.85" />
+          <local:MyComboBox Height="28" MaxDropDownHeight="360" Width="320" HorizontalAlignment="Left" x:Name="ComboFlight" SelectionChanged="Option_Changed" />
+          <TextBlock Text="飞行时间 1 级约 10 秒，2 级约 20 秒，3 级约 30 秒。" Opacity="0.6" FontSize="12" TextWrapping="Wrap" Margin="0,8,0,0" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="爆炸效果">
+        <StackPanel Margin="25,32,25,16">
+          <ListBox x:Name="ListExplosions" Height="150" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListExplosions_SelectionChanged">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <TextBlock MinHeight="26" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Description}" />
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          <WrapPanel Margin="0,10,0,0">
+            <local:MyButton Height="35" Text="新增爆炸" Width="110" Margin="0,0,8,8" ColorType="Highlight" Click="BtnAddExplosion_Click" />
+            <local:MyButton Height="35" Text="删除选中" Width="110" Margin="0,0,8,8" ColorType="Red" Click="BtnDeleteExplosion_Click" />
+          </WrapPanel>
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="编辑选中爆炸">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock Text="形状" Margin="0,0,0,6" Opacity="0.85" />
+          <local:MyComboBox Height="28" MaxDropDownHeight="360" Width="320" HorizontalAlignment="Left" x:Name="ComboShape" SelectionChanged="Shape_Changed" />
+          <TextBlock Text="主颜色（可多选）" Margin="0,14,0,6" />
+          <WrapPanel x:Name="PanelColors" />
+          <TextBlock Text="淡化颜色（可多选，可留空）" Margin="0,10,0,6" />
+          <WrapPanel x:Name="PanelFadeColors" />
+          <WrapPanel Margin="0,8,0,0">
+            <local:MyCheckBox x:Name="CheckTrail" Text="拖曳（钻石）" Change="Option_Change" Height="22" Width="150" Margin="0,0,16,8" />
+            <local:MyCheckBox x:Name="CheckTwinkle" Text="闪烁（荧石粉）" Change="Option_Change" Height="22" Width="170" Margin="0,0,0,8" />
+          </WrapPanel>
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="指令">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock Text="烟花火箭" FontWeight="Bold" Margin="0,0,0,6" />
+          <TextBox x:Name="TextRocket" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" MinHeight="64" Background="Transparent" BorderThickness="0" />
+          <local:MyButton Height="35" Text="复制火箭指令" Width="140" HorizontalAlignment="Left" Margin="0,8,0,16" ColorType="Highlight" Click="BtnCopyRocket_Click" />
+          <TextBlock Text="烟火之星" FontWeight="Bold" Margin="0,0,0,6" />
+          <TextBox x:Name="TextStars" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" MinHeight="90" Background="Transparent" BorderThickness="0" />
+          <local:MyButton Height="35" Text="复制全部指令" Width="140" HorizontalAlignment="Left" Margin="0,8,0,0" Click="BtnCopyStars_Click" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="生存模式合成">
+        <StackPanel Margin="25,32,25,16">
+          <TextBox x:Name="TextCrafting" IsReadOnly="True" TextWrapping="Wrap" MinHeight="90" Background="Transparent" BorderThickness="0" />
+        </StackPanel>
+      </local:MyCard>
+    </StackPanel>
+  </local:MyScrollViewer>
+</local:MyPageRight>

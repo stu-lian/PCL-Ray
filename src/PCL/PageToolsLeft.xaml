@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageLeft x:Class="PCL.PageToolsLeft" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:local="clr-namespace:PCL">
+  <local:MyScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Style="{StaticResource ScrollViewerFullMargin}">
+  <StackPanel Name="PanItem" Orientation="Vertical" Margin="0,12,0,0">
+    <TextBlock Name="TextToolsCategory" Text="{DynamicResource Tools.Left.Utilities}" Margin="13,5,5,3" Opacity="0.6" FontSize="12" />
+    <local:MyListItem x:Name="ItemTest" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="3" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="{DynamicResource Tools.Left.Utilities.Title}" LogoScale="0.9" SvgIcon="lucide/tool-case" />
+    <local:MyListItem x:Name="ItemMapViewer" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="19" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="{DynamicResource Tools.Left.MapViewer}" LogoScale="0.9" SvgIcon="lucide/globe" />
+    <local:MyListItem x:Name="ItemModTranslate" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="20" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="{DynamicResource Tools.Left.ModTranslate}" LogoScale="0.9" SvgIcon="lucide/bubbles" />
+    <local:MyListItem x:Name="ItemLogAnalyse" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="21" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="{DynamicResource Tools.Left.LogAnalyse}" LogoScale="0.9" SvgIcon="lucide/scroll-text" />
+    <local:MyListItem x:Name="ItemColorCode" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="22" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="{DynamicResource Tools.Left.ColorCode}" LogoScale="0.9" SvgIcon="lucide/palette" />
+    <local:MyListItem x:Name="ItemHeadGenerator" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="23" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="{DynamicResource Tools.Left.HeadGenerator}" LogoScale="0.9" SvgIcon="lucide/user" />
+    <local:MyListItem x:Name="ItemSummon" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="24" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="召唤指令生成" LogoScale="0.9" SvgIcon="lucide/sparkles" />
+    <local:MyListItem x:Name="ItemShield" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="25" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="盾牌设计" LogoScale="0.9" SvgIcon="lucide/shield-check" />
+    <local:MyListItem x:Name="ItemFirework" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="26" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="烟花设计" LogoScale="0.9" SvgIcon="lucide/rocket" />
+    <local:MyListItem x:Name="ItemBeacon" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="27" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="信标颜色计算" LogoScale="0.9" SvgIcon="lucide/flask-conical" />
+    <local:MyListItem x:Name="ItemArmorTrim" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="28" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="盔甲纹饰设计" LogoScale="0.9" SvgIcon="lucide/shirt" />
+    <local:MyListItem x:Name="ItemTitle" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="29" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="Title 指令生成" LogoScale="0.9" SvgIcon="lucide/pencil" />
+    <local:MyListItem x:Name="ItemPlayerData" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="30" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="玩家数据编辑" LogoScale="0.9" SvgIcon="lucide/user-plus" />
+    <local:MyListItem x:Name="ItemHardcoreReviver" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="31" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="极限存档复活" LogoScale="0.9" SvgIcon="lucide/heart" />
+    <local:MyListItem x:Name="ItemNbtEditor" Check="PageCheck" IsScaleAnimationEnabled="False" Type="RadioBox" Tag="32" MinPaddingRight="35" Height="36" VerticalAlignment="Top" Title="NBT 编辑器" LogoScale="0.9" SvgIcon="lucide/file-box" />
+  </StackPanel>
+  </local:MyScrollViewer>
+</local:MyPageLeft>

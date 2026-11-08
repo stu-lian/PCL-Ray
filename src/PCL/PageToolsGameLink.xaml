@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageToolsGameLink" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:svgIcon="clr-namespace:PCL.Core.UI.Controls.SvgIcon;assembly=PCL.Core">
+  <Grid>
+    <local:MyScrollViewer x:Name="PanContent">
+      <Grid Margin="25,25,25,10">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="*" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <local:MyHint x:Name="HintStatus" Margin="10" MinHeight="36" MaxHeight="64" Grid.Row="0" HorizontalAlignment="Stretch" Text="{DynamicResource Tools.GameLink.Terracotta.Hint}" Theme="Blue" />
+        <StackPanel Name="PanSelect" Grid.Row="1" HorizontalAlignment="Stretch" Orientation="Vertical">
+          <local:MyCard x:Name="CardTerracottaManage" Margin="0,0,0,15" Title="{DynamicResource Setup.GameLink.Terracotta.Title}">
+            <StackPanel Margin="20,40,20,20">
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" MinWidth="110" />
+                  <ColumnDefinition Width="10" />
+                  <ColumnDefinition Width="Auto" MinWidth="110" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="7" />
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="12" />
+                  <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <TextBlock Name="TextTerracottaVersion" TextWrapping="Wrap" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,15,0" />
+                <TextBlock Name="TextTerracottaStatus" TextWrapping="Wrap" Opacity="0.7" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,15,0" />
+                <local:MyButton x:Name="BtnDownloadTerracotta" Click="BtnDownloadTerracotta_Click" Text="{DynamicResource Setup.GameLink.Terracotta.Download}" ColorType="Highlight" Grid.Row="4" Grid.Column="1" MinWidth="140" Padding="13,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <local:MyButton x:Name="BtnCheckTerracottaUpdate" Click="BtnCheckTerracottaUpdate_Click" Text="{DynamicResource Setup.GameLink.Terracotta.CheckUpdate}" ColorType="Normal" Grid.Row="4" Grid.Column="3" MinWidth="140" Padding="13,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+              </Grid>
+            </StackPanel>
+          </local:MyCard>
+          <local:MyCard x:Name="CardJoin" Margin="0,0,0,15" Title="{DynamicResource Tools.GameLink.Join.Title}">
+            <StackPanel Margin="20,40,20,20">
+              <TextBlock LineHeight="23" FontSize="14" TextWrapping="Wrap" Margin="0,0,0,10" Text="{DynamicResource Tools.GameLink.Terracotta.Join.Description}" />
+              <DockPanel Margin="0" Height="28">
+                <local:MyButton x:Name="BtnJoin" Click="BtnJoin_Click" DockPanel.Dock="Right" Text="{DynamicResource Tools.GameLink.Join.Action}" ColorType="Highlight" Width="58" Margin="8,0,0,0" />
+                <local:MyButton x:Name="BtnPaste" Click="PasteLobbyId" DockPanel.Dock="Right" Text="{DynamicResource Tools.GameLink.Join.Paste}" ColorType="Normal" Width="50" Margin="8,0,0,0" />
+                <local:MyButton x:Name="BtnClearLobbyId" Click="ClearLobbyId" DockPanel.Dock="Right" Text="{DynamicResource Tools.GameLink.Join.Clear}" ColorType="Normal" Width="50" Margin="10,0,0,0" />
+                <local:MyTextBox x:Name="TextJoinLobbyId" KeyDown="TextJoinLobbyId_KeyDown" HintText="{DynamicResource Tools.GameLink.Join.IdHint}" MaxLines="1" AcceptsReturn="False" />
+              </DockPanel>
+            </StackPanel>
+          </local:MyCard>
+          <local:MyCard x:Name="CardCreate" Margin="0,0,0,15" Title="{DynamicResource Tools.GameLink.Create.Title}" CanSwap="True">
+            <StackPanel Margin="20,40,20,20">
+              <TextBlock LineHeight="23" FontSize="14" TextWrapping="Wrap" Margin="10,10,10,0" Text="{DynamicResource Tools.GameLink.Terracotta.Create.Description}" />
+              <DockPanel Margin="0" Height="28">
+                <local:MyButton x:Name="BtnCreate" Click="BtnCreate_Click" DockPanel.Dock="Right" Text="{DynamicResource Tools.GameLink.Create.Action}" ColorType="Highlight" Width="50" Margin="10,0,0,0" />
+                <local:MyButton x:Name="BtnRefresh" Click="BtnRefresh_Click" DockPanel.Dock="Right" Text="{DynamicResource Common.Action.Refresh}" ColorType="Normal" Width="50" Margin="10,0,0,0" />
+                <local:MyButton x:Name="BtnInputPort" Click="BtnInputPort_Click" DockPanel.Dock="Right" Text="{DynamicResource Tools.GameLink.Create.ManualInput}" ColorType="Normal" Width="88" Margin="8,0,0,0" />
+                <local:MyComboBox x:Name="ComboWorldList" DropDownWidthSync="False" />
+              </DockPanel>
+            </StackPanel>
+          </local:MyCard>
+          <local:MyCard Margin="0,0,0,15" Title="{DynamicResource Setup.GameLink.Terracotta.Advanced.Title}" CanSwap="True">
+            <StackPanel Margin="20,40,20,20">
+              <local:MyHint Text="{DynamicResource Setup.GameLink.Terracotta.Advanced.Hint}" Theme="Blue" Margin="0,0,0,10" />
+              <Grid>
+                <Grid.ColumnDefinitions>
+                  <ColumnDefinition Width="*" />
+                  <ColumnDefinition Width="Auto" MinWidth="110" />
+                  <ColumnDefinition Width="10" />
+                  <ColumnDefinition Width="Auto" MinWidth="110" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="7" />
+                  <RowDefinition Height="Auto" />
+                  <RowDefinition Height="12" />
+                  <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <TextBlock Text="{DynamicResource Setup.GameLink.Terracotta.Advanced.Path}" TextWrapping="Wrap" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,15,0" />
+                <TextBlock Name="TextTerracottaPath" TextWrapping="Wrap" Opacity="0.7" FontFamily="Consolas" Grid.Row="2" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,15,0" />
+                <local:MyButton x:Name="BtnOpenTerracottaFolder" Click="BtnOpenTerracottaFolder_Click" Text="{DynamicResource Setup.GameLink.Terracotta.OpenFolder}" ColorType="Normal" Grid.Row="4" Grid.Column="1" MinWidth="140" Padding="13,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+                <local:MyButton x:Name="BtnStopTerracotta" Click="BtnStopTerracotta_Click" Text="{DynamicResource Setup.GameLink.Terracotta.StopService}" ColorType="Normal" Grid.Row="4" Grid.Column="3" MinWidth="140" Padding="13,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+              </Grid>
+            </StackPanel>
+          </local:MyCard>
+          <local:MyCard Margin="0,0,0,15" Title="{DynamicResource Tools.GameLink.Terracotta.About.Title}">
+            <StackPanel Margin="20,40,20,20">
+              <TextBlock TextWrapping="Wrap" LineHeight="22" Text="{DynamicResource Tools.GameLink.Terracotta.About.Description}" />
+              <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                <local:MyTextButton Text="{DynamicResource Tools.GameLink.Terracotta.About.Website}" local:CustomEventService.EventType="OpenUrl" local:CustomEventService.EventData="https://github.com/burningtnt/Terracotta" />
+              </StackPanel>
+            </StackPanel>
+          </local:MyCard>
+        </StackPanel>
+        <Grid Name="PanFinish" Visibility="Collapsed" Row="1">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <local:MyCard x:Name="PanNetInfo" Title="{DynamicResource Tools.GameLink.Finish.InfoTitle}" Margin="0,0,0,15" Row="0">
+            <StackPanel Orientation="Vertical" Margin="20,40,20,20">
+              <StackPanel Name="BtnFinishQuality" Margin="0,0,0,6" Orientation="Horizontal" Background="{StaticResource ColorBrushSemiTransparent}" ToolTip="{DynamicResource Tools.GameLink.Finish.ConnectionStatus}" ToolTipService.Placement="MousePoint" ToolTipService.InitialShowDelay="100" ToolTipService.VerticalOffset="-35">
+                <svgIcon:SvgIcon UIElement.IsHitTestVisible="False" FrameworkElement.Width="14" Stretch="Uniform" IconBrush="{DynamicResource ColorBrushGray1}" FrameworkElement.Margin="0,0,7,0" Icon="lucide/link-2" />
+                <TextBlock Name="LabFinishQuality" IsHitTestVisible="False" Text="{DynamicResource Tools.GameLink.Finish.Checking}" VerticalAlignment="Center" Foreground="{StaticResource ColorBrushGray1}" Margin="0,0,12,0" />
+              </StackPanel>
+              <StackPanel Margin="0,0,0,6" Orientation="Horizontal">
+                <svgIcon:SvgIcon UIElement.IsHitTestVisible="False" FrameworkElement.Width="14" Stretch="Uniform" IconBrush="{DynamicResource ColorBrushGray1}" FrameworkElement.Margin="0,0,7,0" Icon="lucide/user" />
+                <TextBlock Name="LabConnectUserName" IsHitTestVisible="False" Text="UserName" VerticalAlignment="Center" Foreground="{StaticResource ColorBrushGray1}" Margin="0,0,12,0" />
+              </StackPanel>
+              <StackPanel Margin="5,6,5,0" Orientation="Horizontal">
+                <svgIcon:SvgIcon UIElement.IsHitTestVisible="False" FrameworkElement.Width="14" Stretch="Uniform" IconBrush="{DynamicResource ColorBrushGray1}" FrameworkElement.Margin="0,0,7,0" Icon="lucide/users" />
+                <TextBlock Name="LabConnectUserType" IsHitTestVisible="False" Text="UserType" VerticalAlignment="Center" Foreground="{StaticResource ColorBrushGray1}" Margin="0,0,12,0" />
+              </StackPanel>
+              <StackPanel Margin="5,6,5,0" Orientation="Horizontal">
+                <svgIcon:SvgIcon UIElement.IsHitTestVisible="False" FrameworkElement.Width="14" Stretch="Uniform" IconBrush="{DynamicResource ColorBrushGray1}" FrameworkElement.Margin="0,0,7,0" Icon="lucide/link-2" />
+                <TextBlock Name="LabFinishId" IsHitTestVisible="False" Text="U/XXXX-XXXX-XXXX-XXXX" VerticalAlignment="Center" Foreground="{StaticResource ColorBrushGray1}" Margin="0,0,12,0" FontFamily="Consolas" />
+              </StackPanel>
+              <StackPanel Margin="5,6,5,0" Orientation="Horizontal">
+                <svgIcon:SvgIcon UIElement.IsHitTestVisible="False" FrameworkElement.Width="14" Stretch="Uniform" IconBrush="{DynamicResource ColorBrushGray1}" FrameworkElement.Margin="0,0,7,0" Icon="lucide/server" />
+                <TextBlock Name="LabFinishAddress" IsHitTestVisible="False" Text="-" VerticalAlignment="Center" Foreground="{StaticResource ColorBrushGray1}" Margin="0,0,12,0" />
+              </StackPanel>
+            </StackPanel>
+          </local:MyCard>
+          <local:MyCard x:Name="PanOperation" Title="{DynamicResource Tools.GameLink.Finish.Actions}" Margin="0,0,0,15" Row="1">
+            <StackPanel Orientation="Vertical" Margin="10,35,10,10">
+              <local:MyIconTextButton x:Name="BtnFinishCopyIp" Click="BtnFinishCopyIp_Click" Margin="-2,1" HorizontalAlignment="Left" Text="{DynamicResource Tools.GameLink.Terracotta.CopyAddress}" SvgIcon="lucide/copy" />
+              <local:MyIconTextButton x:Name="BtnFinishCopy" Click="BtnFinishCopy_Click" Margin="-2,1" HorizontalAlignment="Left" Text="{DynamicResource Tools.GameLink.Terracotta.CopyRoomCode}" SvgIcon="lucide/copy" />
+              <local:MyIconTextButton x:Name="BtnFinishExit" Click="BtnFinishExit_Click" Margin="-2,1" HorizontalAlignment="Left" Text="{DynamicResource Tools.GameLink.Terracotta.Stop}" SvgIcon="lucide/power" />
+            </StackPanel>
+          </local:MyCard>
+          <local:MyCard x:Name="CardPlayerList" Title="{DynamicResource Tools.GameLink.Member.ListLoading}" Margin="0,0,0,15" MinWidth="300" Row="0" RowSpan="2" Column="1">
+            <StackPanel Name="StackPlayerList" Margin="20,40,20,20" />
+          </local:MyCard>
+        </Grid>
+        <local:MyCard x:Name="PanFooter" Row="2" Margin="0,15,0,0">
+          <StackPanel HorizontalAlignment="Center" Margin="15,8" Orientation="Horizontal" Opacity="0.75">
+            <TextBlock Text="{DynamicResource Tools.GameLink.Terracotta.Footer}" TextWrapping="Wrap" MaxWidth="640" TextAlignment="Center" />
+            <local:MyTextButton Text="Terracotta" local:CustomEventService.EventType="OpenUrl" local:CustomEventService.EventData="https://github.com/burningtnt/Terracotta" />
+          </StackPanel>
+        </local:MyCard>
+      </Grid>
+    </local:MyScrollViewer>
+  </Grid>
+</local:MyPageRight>

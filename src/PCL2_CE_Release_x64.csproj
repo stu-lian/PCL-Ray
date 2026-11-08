@@ -1,0 +1,488 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyName>Plain Craft Launcher 2</AssemblyName>
+    <GenerateAssemblyInfo>False</GenerateAssemblyInfo>
+    <OutputType>WinExe</OutputType>
+    <UseWPF>True</UseWPF>
+    <UseWindowsForms>True</UseWindowsForms>
+    <TargetFramework>net10.0-windows7.0</TargetFramework>
+    <PlatformTarget>x64</PlatformTarget>
+    <StartupObject>PCL.Program</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4314.35" />
+  </ItemGroup>
+  <PropertyGroup>
+    <LangVersion>14.0</LangVersion>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>False</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <RootNamespace />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="PCL.Core\**\*.cs" />
+    <Page Remove="PCL.Core\**\*.xaml" />
+    <Resource Remove="PCL.Core\**\*" />
+    <None Remove="PCL.Core\**\*" />
+    <None Remove="PCL.metadata.json" />
+    <EmbeddedResource Include="PCL.metadata.json" LogicalName="PCL.metadata.json" />
+    <ApplicationDefinition Remove="PCL\Application.xaml" />
+    <ApplicationDefinition Include="PCL\Application.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="application.xaml" />
+    <Page Remove="PCL\FontSelector.xaml" />
+    <Page Remove="PCL\FormMain.xaml" />
+    <Page Remove="PCL\MinecraftServer.xaml" />
+    <Page Remove="PCL\MinecraftServerQuery.xaml" />
+    <Page Remove="PCL\MyButton.xaml" />
+    <Page Remove="PCL\MyCheckBox.xaml" />
+    <Page Remove="PCL\MyCompItem.xaml" />
+    <Page Remove="PCL\MyExtraButton.xaml" />
+    <Page Remove="PCL\MyExtraTextButton.xaml" />
+    <Page Remove="PCL\MyHint.xaml" />
+    <Page Remove="PCL\MyIconButton.xaml" />
+    <Page Remove="PCL\MyIconTextButton.xaml" />
+    <Page Remove="PCL\MyListItem.xaml" />
+    <Page Remove="PCL\MyLoading.xaml" />
+    <Page Remove="PCL\MyLocalCompItem.xaml" />
+    <Page Remove="PCL\MyMsgAuthServer.xaml" />
+    <Page Remove="PCL\MyMsgInput.xaml" />
+    <Page Remove="PCL\MyMsgLogin.xaml" />
+    <Page Remove="PCL\MyMsgMarkdown.xaml" />
+    <Page Remove="PCL\MyMsgSelect.xaml" />
+    <Page Remove="PCL\MyMsgText.xaml" />
+    <Page Remove="PCL\MyRadioBox.xaml" />
+    <Page Remove="PCL\MyRadioButton.xaml" />
+    <Page Remove="PCL\MySearchBox.xaml" />
+    <Page Remove="PCL\MySkin.xaml" />
+    <Page Remove="PCL\MySlider.xaml" />
+    <Page Remove="PCL\MyToast.xaml" />
+    <Page Remove="PCL\PageComp.xaml" />
+    <Page Remove="PCL\PageDownloadCleanroom.xaml" />
+    <Page Remove="PCL\PageDownloadClient.xaml" />
+    <Page Remove="PCL\PageDownloadCompDetail.xaml" />
+    <Page Remove="PCL\PageDownloadCompFavorites.xaml" />
+    <Page Remove="PCL\PageDownloadDataPack.xaml" />
+    <Page Remove="PCL\PageDownloadFabric.xaml" />
+    <Page Remove="PCL\PageDownloadForge.xaml" />
+    <Page Remove="PCL\PageDownloadInstall.xaml" />
+    <Page Remove="PCL\PageDownloadLabyMod.xaml" />
+    <Page Remove="PCL\PageDownloadLeft.xaml" />
+    <Page Remove="PCL\PageDownloadLegacyFabric.xaml" />
+    <Page Remove="PCL\PageDownloadLiteLoader.xaml" />
+    <Page Remove="PCL\PageDownloadMod.xaml" />
+    <Page Remove="PCL\PageDownloadNeoForge.xaml" />
+    <Page Remove="PCL\PageDownloadOptiFine.xaml" />
+    <Page Remove="PCL\PageDownloadPack.xaml" />
+    <Page Remove="PCL\PageDownloadResourcePack.xaml" />
+    <Page Remove="PCL\PageDownloadShader.xaml" />
+    <Page Remove="PCL\PageDownloadWorld.xaml" />
+    <Page Remove="PCL\PageHelpDetail.xaml" />
+    <Page Remove="PCL\PageHomepageNewsView.xaml" />
+    <Page Remove="PCL\PageInstanceCompJarInJar.xaml" />
+    <Page Remove="PCL\PageInstanceCompResource.xaml" />
+    <Page Remove="PCL\PageInstanceExport.xaml" />
+    <Page Remove="PCL\PageInstanceInstall.xaml" />
+    <Page Remove="PCL\PageInstanceLeft.xaml" />
+    <Page Remove="PCL\PageInstanceModDisabled.xaml" />
+    <Page Remove="PCL\PageInstanceOverall.xaml" />
+    <Page Remove="PCL\PageInstanceSaves.xaml" />
+    <Page Remove="PCL\PageInstanceSavesDatapack.xaml" />
+    <Page Remove="PCL\PageInstanceSavesInfo.xaml" />
+    <Page Remove="PCL\PageInstanceSavesLeft.xaml" />
+    <Page Remove="PCL\PageInstanceScreenshot.xaml" />
+    <Page Remove="PCL\PageInstanceServer.xaml" />
+    <Page Remove="PCL\PageInstanceSetup.xaml" />
+    <Page Remove="PCL\PageLaunchLeft.xaml" />
+    <Page Remove="PCL\PageLaunchRight.xaml" />
+    <Page Remove="PCL\PageLoginAuth.xaml" />
+    <Page Remove="PCL\PageLoginMs.xaml" />
+    <Page Remove="PCL\PageLoginOffline.xaml" />
+    <Page Remove="PCL\PageLoginProfile.xaml" />
+    <Page Remove="PCL\PageLoginProfileSkin.xaml" />
+    <Page Remove="PCL\PageLogLeft.xaml" />
+    <Page Remove="PCL\PageLogRight.xaml" />
+    <Page Remove="PCL\PageSelectLeft.xaml" />
+    <Page Remove="PCL\PageSelectRight.xaml" />
+    <Page Remove="PCL\PageSetupAbout.xaml" />
+    <Page Remove="PCL\PageSetupFeedback.xaml" />
+    <Page Remove="PCL\PageSetupGameLink.xaml" />
+    <Page Remove="PCL\PageSetupGameManage.xaml" />
+    <Page Remove="PCL\PageSetupJava.xaml" />
+    <Page Remove="PCL\PageSetupLaunch.xaml" />
+    <Page Remove="PCL\PageSetupLauncherLanguage.xaml" />
+    <Page Remove="PCL\PageSetupLauncherMisc.xaml" />
+    <Page Remove="PCL\PageSetupLeft.xaml" />
+    <Page Remove="PCL\PageSetupLog.xaml" />
+    <Page Remove="PCL\PageSetupUI.xaml" />
+    <Page Remove="PCL\PageSetupUpdate.xaml" />
+    <Page Remove="PCL\PageSpeedLeft.xaml" />
+    <Page Remove="PCL\PageSpeedRight.xaml" />
+    <Page Remove="PCL\PageToolsGameLink.xaml" />
+    <Page Remove="PCL\PageToolsLeft.xaml" />
+    <Page Remove="PCL\PageToolsTest.xaml" />
+    <Page Remove="PCL\PageToolsMapViewer.xaml" />
+    <Page Remove="PCL\PageToolsModTranslate.xaml" />
+    <Page Remove="PCL\PageToolsLogAnalyse.xaml" />
+    <Page Remove="PCL\PageToolsColorCode.xaml" />
+    <Page Remove="PCL\PageToolsHeadGenerator.xaml" />
+    <Page Remove="PCL\PageToolsSummon.xaml" />
+    <Page Remove="PCL\PageToolsShield.xaml" />
+    <Page Remove="PCL\PageToolsFirework.xaml" />
+    <Page Remove="PCL\PageToolsBeacon.xaml" />
+    <Page Remove="PCL\PageToolsArmorTrim.xaml" />
+    <Page Remove="PCL\PageToolsTitle.xaml" />
+    <Page Remove="PCL\PageToolsPlayerData.xaml" />
+    <Page Remove="PCL\PageToolsHardcoreReviver.xaml" />
+    <Page Remove="PCL\PageToolsNbtEditor.xaml" />
+    <Page Remove="PCL\ServerCard.xaml" />
+    <Page Remove="resources\markdown.xaml" />
+    <Page Include="PCL\FontSelector.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/fontselector.xaml" />
+    <Page Include="PCL\FormMain.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="formmain.xaml" />
+    <Page Include="PCL\MinecraftServer.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/minecraftserver.xaml" />
+    <Page Include="PCL\MinecraftServerQuery.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/minecraftserverquery.xaml" />
+    <Page Include="PCL\MyButton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mybutton.xaml" />
+    <Page Include="PCL\MyCheckBox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mycheckbox.xaml" />
+    <Page Include="PCL\MyCompItem.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/comp/mycompitem.xaml" />
+    <Page Include="PCL\MyExtraButton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/myextrabutton.xaml" />
+    <Page Include="PCL\MyExtraTextButton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/myextratextbutton.xaml" />
+    <Page Include="PCL\MyHint.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/myhint.xaml" />
+    <Page Include="PCL\MyIconButton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/myiconbutton.xaml" />
+    <Page Include="PCL\MyIconTextButton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/myicontextbutton.xaml" />
+    <Page Include="PCL\MyListItem.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mylistitem.xaml" />
+    <Page Include="PCL\MyLoading.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/myloading.xaml" />
+    <Page Include="PCL\MyLocalCompItem.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/mylocalmoditem.xaml" />
+    <Page Include="PCL\MyMsgAuthServer.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mymsg/mymsgauthserver.xaml" />
+    <Page Include="PCL\MyMsgInput.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mymsg/mymsginput.xaml" />
+    <Page Include="PCL\MyMsgLogin.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelaunch/mymsglogin.xaml" />
+    <Page Include="PCL\MyMsgMarkdown.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mymsg/mymsgmarkdown.xaml" />
+    <Page Include="PCL\MyMsgSelect.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mymsg/mymsgselect.xaml" />
+    <Page Include="PCL\MyMsgText.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mymsg/mymsgtext.xaml" />
+    <Page Include="PCL\MyRadioBox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/myradiobox.xaml" />
+    <Page Include="PCL\MyRadioButton.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/myradiobutton.xaml" />
+    <Page Include="PCL\MySearchBox.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mysearchbox.xaml" />
+    <Page Include="PCL\MySkin.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelaunch/myskin.xaml" />
+    <Page Include="PCL\MySlider.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/myslider.xaml" />
+    <Page Include="PCL\MyToast.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="controls/mytoast.xaml" />
+    <Page Include="PCL\PageComp.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/comp/pagecomp.xaml" />
+    <Page Include="PCL\PageDownloadCleanroom.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadcleanroom.xaml" />
+    <Page Include="PCL\PageDownloadClient.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadclient.xaml" />
+    <Page Include="PCL\PageDownloadCompDetail.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/comp/pagedownloadcompdetail.xaml" />
+    <Page Include="PCL\PageDownloadCompFavorites.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadcompfavorites.xaml" />
+    <Page Include="PCL\PageDownloadDataPack.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/comp/pagedownloaddatapack.xaml" />
+    <Page Include="PCL\PageDownloadFabric.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadfabric.xaml" />
+    <Page Include="PCL\PageDownloadForge.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadforge.xaml" />
+    <Page Include="PCL\PageDownloadInstall.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadinstall.xaml" />
+    <Page Include="PCL\PageDownloadLabyMod.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadlabymod.xaml" />
+    <Page Include="PCL\PageDownloadLeft.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadleft.xaml" />
+    <Page Include="PCL\PageDownloadLegacyFabric.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadlegacyfabric.xaml" />
+    <Page Include="PCL\PageDownloadLiteLoader.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadliteloader.xaml" />
+    <Page Include="PCL\PageDownloadMod.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/comp/pagedownloadmod.xaml" />
+    <Page Include="PCL\PageDownloadNeoForge.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadneoforge.xaml" />
+    <Page Include="PCL\PageDownloadOptiFine.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/pagedownloadoptifine.xaml" />
+    <Page Include="PCL\PageDownloadPack.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/comp/pagedownloadpack.xaml" />
+    <Page Include="PCL\PageDownloadResourcePack.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/comp/pagedownloadresourcepack.xaml" />
+    <Page Include="PCL\PageDownloadShader.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/comp/pagedownloadshader.xaml" />
+    <Page Include="PCL\PageDownloadWorld.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagedownload/comp/pagedownloadworld.xaml" />
+    <Page Include="PCL\PageHelpDetail.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagehelpdetail.xaml" />
+    <Page Include="PCL\PageHomepageNewsView.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagehomepage/pagehomepagenewsview.xaml" />
+    <Page Include="PCL\PageInstanceCompJarInJar.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstancecompjarinjar.xaml" />
+    <Page Include="PCL\PageInstanceCompResource.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstancecompresource.xaml" />
+    <Page Include="PCL\PageInstanceExport.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstanceexport.xaml" />
+    <Page Include="PCL\PageInstanceInstall.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstanceinstall.xaml" />
+    <Page Include="PCL\PageInstanceLeft.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstanceleft.xaml" />
+    <Page Include="PCL\PageInstanceModDisabled.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstancemoddisabled.xaml" />
+    <Page Include="PCL\PageInstanceOverall.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstanceoverall.xaml" />
+    <Page Include="PCL\PageInstanceSaves.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstancesaves.xaml" />
+    <Page Include="PCL\PageInstanceSavesDatapack.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstancesaves/pageinstancesavesdatapack.xaml" />
+    <Page Include="PCL\PageInstanceSavesInfo.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstancesaves/pageinstancesavesinfo.xaml" />
+    <Page Include="PCL\PageInstanceSavesLeft.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstancesaves/pageinstancesavesleft.xaml" />
+    <Page Include="PCL\PageInstanceScreenshot.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstancescreenshot.xaml" />
+    <Page Include="PCL\PageInstanceServer.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstanceserver.xaml" />
+    <Page Include="PCL\PageInstanceSetup.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/pageinstancesetup.xaml" />
+    <Page Include="PCL\PageLaunchLeft.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelaunch/pagelaunchleft.xaml" />
+    <Page Include="PCL\PageLaunchRight.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelaunch/pagelaunchright.xaml" />
+    <Page Include="PCL\PageLoginAuth.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelaunch/pageloginauth.xaml" />
+    <Page Include="PCL\PageLoginMs.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelaunch/pageloginms.xaml" />
+    <Page Include="PCL\PageLoginOffline.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelaunch/pageloginoffline.xaml" />
+    <Page Include="PCL\PageLoginProfile.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelaunch/pageloginprofile.xaml" />
+    <Page Include="PCL\PageLoginProfileSkin.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelaunch/pageloginprofileskin.xaml" />
+    <Page Include="PCL\PageLogLeft.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelogleft.xaml" />
+    <Page Include="PCL\PageLogRight.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagelogright.xaml" />
+    <Page Include="PCL\PageSelectLeft.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageselectleft.xaml" />
+    <Page Include="PCL\PageSelectRight.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageselectright.xaml" />
+    <Page Include="PCL\PageSetupAbout.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetupabout.xaml" />
+    <Page Include="PCL\PageSetupFeedback.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetupfeedback.xaml" />
+    <Page Include="PCL\PageSetupGameLink.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetupgamelink.xaml" />
+    <Page Include="PCL\PageSetupGameManage.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetupgamemanage.xaml" />
+    <Page Include="PCL\PageSetupJava.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetupjava.xaml" />
+    <Page Include="PCL\PageSetupLaunch.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetuplaunch.xaml" />
+    <Page Include="PCL\PageSetupLauncherLanguage.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetuplauncherlanguage.xaml" />
+    <Page Include="PCL\PageSetupLauncherMisc.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetuplaunchermisc.xaml" />
+    <Page Include="PCL\PageSetupLeft.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetupleft.xaml" />
+    <Page Include="PCL\PageSetupLog.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetuplog.xaml" />
+    <Page Include="PCL\PageSetupUI.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetupui.xaml" />
+    <Page Include="PCL\PageSetupUpdate.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagesetup/pagesetupupdate.xaml" />
+    <Page Include="PCL\PageSpeedLeft.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagespeedleft.xaml" />
+    <Page Include="PCL\PageSpeedRight.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagespeedright.xaml" />
+    <Page Include="PCL\PageToolsGameLink.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsgamelink.xaml" />
+    <Page Include="PCL\PageToolsLeft.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsleft.xaml" />
+    <Page Include="PCL\PageToolsTest.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolstest.xaml" />
+    <Page Include="PCL\PageToolsMapViewer.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsmapviewer.xaml" />
+    <Page Include="PCL\PageToolsModTranslate.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsmodtranslate.xaml" />
+    <Page Include="PCL\PageToolsLogAnalyse.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsloganalyse.xaml" />
+    <Page Include="PCL\PageToolsColorCode.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolscolorcode.xaml" />
+    <Page Include="PCL\PageToolsHeadGenerator.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsheadgenerator.xaml" />
+    <Page Include="PCL\PageToolsSummon.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolssummon.xaml" />
+    <Page Include="PCL\PageToolsShield.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsshield.xaml" />
+    <Page Include="PCL\PageToolsFirework.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsfirework.xaml" />
+    <Page Include="PCL\PageToolsBeacon.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsbeacon.xaml" />
+    <Page Include="PCL\PageToolsArmorTrim.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsarmortrim.xaml" />
+    <Page Include="PCL\PageToolsTitle.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolstitle.xaml" />
+    <Page Include="PCL\PageToolsPlayerData.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsplayerdata.xaml" />
+    <Page Include="PCL\PageToolsHardcoreReviver.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolshardcorereviver.xaml" />
+    <Page Include="PCL\PageToolsNbtEditor.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pagetools/pagetoolsnbtditor.xaml" />
+    <Page Include="PCL\ServerCard.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="pages/pageinstance/servercard.xaml" />
+    <Page Include="resources\markdown.xaml" Generator="MSBuild:Compile" SubType="Designer" LogicalName="resources/markdown.xaml" />
+    <Resource Remove="images\backgrounds\server_bg.png" />
+    <Resource Remove="images\blocks\anvil.png" />
+    <Resource Remove="images\blocks\cleanroom.png" />
+    <Resource Remove="images\blocks\cobblestone.png" />
+    <Resource Remove="images\blocks\commandblock.png" />
+    <Resource Remove="images\blocks\egg.png" />
+    <Resource Remove="images\blocks\fabric.png" />
+    <Resource Remove="images\blocks\goldblock.png" />
+    <Resource Remove="images\blocks\grass.png" />
+    <Resource Remove="images\blocks\grasspath.png" />
+    <Resource Remove="images\blocks\labymod.png" />
+    <Resource Remove="images\blocks\neoforge.png" />
+    <Resource Remove="images\blocks\optifabric.png" />
+    <Resource Remove="images\blocks\quilt.png" />
+    <Resource Remove="images\blocks\redstoneblock.png" />
+    <Resource Remove="images\blocks\redstonelampoff.png" />
+    <Resource Remove="images\blocks\redstonelampon.png" />
+    <Resource Remove="images\heads\bangbang93.png" />
+    <Resource Remove="images\heads\easytier.png" />
+    <Resource Remove="images\heads\emperormummy.png" />
+    <Resource Remove="images\heads\logo-ce.png" />
+    <Resource Remove="images\heads\logo.png" />
+    <Resource Remove="images\heads\ltcat.jpg" />
+    <Resource Remove="images\heads\pcl-community.png" />
+    <Resource Remove="images\heads\pysio.jpg" />
+    <Resource Remove="images\heads\wiki.png" />
+    <Resource Remove="images\heads\yunmoan.jpg" />
+    <Resource Remove="images\heads\z0z0r4.png" />
+    <Resource Remove="images\heads\stu_lian.jpg" />
+    <Resource Remove="images\icon.ico" />
+    <Resource Remove="images\icon.png" />
+    <Resource Remove="images\splash.png" />
+    <Resource Remove="images\icons\a.png" />
+    <Resource Remove="images\icons\b.png" />
+    <Resource Remove="images\icons\defaultserver.png" />
+    <Resource Remove="images\icons\disabled.png" />
+    <Resource Remove="images\icons\folder.png" />
+    <Resource Remove="images\icons\noicon.png" />
+    <Resource Remove="images\icons\r.png" />
+    <Resource Remove="images\icons\unavailable.png" />
+    <Resource Remove="images\skins\alex.png" />
+    <Resource Remove="images\skins\ari.png" />
+    <Resource Remove="images\skins\efe.png" />
+    <Resource Remove="images\skins\kai.png" />
+    <Resource Remove="images\skins\makena.png" />
+    <Resource Remove="images\skins\noor.png" />
+    <Resource Remove="images\skins\steve.png" />
+    <Resource Remove="images\skins\sunny.png" />
+    <Resource Remove="images\skins\zuri.png" />
+    <Resource Remove="resources\font.ttf" />
+    <Resource Remove="resources\forge-installer.jar" />
+    <Resource Remove="resources\hints\en-us.txt" />
+    <Resource Remove="resources\hints\zh-cn.txt" />
+    <Resource Remove="resources\java-wrapper.jar" />
+    <Resource Remove="resources\legacyfix.jar" />
+    <Resource Remove="resources\linkd.exe" />
+    <Resource Remove="resources\log4j2-debug.xml" />
+    <Resource Remove="resources\log4j2-legacy-debug.xml" />
+    <Resource Remove="resources\lwjgl-unsafe-agent.jar" />
+    <Resource Remove="resources\markdown.xaml" />
+    <Resource Remove="resources\mcmod.buf" />
+    <Resource Remove="resources\oauth-complete.html" />
+    <Resource Remove="resources\transformer.jar" />
+    <Resource Include="images\backgrounds\server_bg.png" LogicalName="images/backgrounds/server_bg.png" />
+    <EmbeddedResource Include="PCL\Tools\ArmorAssets\*.png" LogicalName="PCL.Tools.ArmorAssets.%(Filename)%(Extension)" />
+    <Resource Include="images\blocks\anvil.png" LogicalName="images/blocks/anvil.png" />
+    <Resource Include="images\blocks\cleanroom.png" LogicalName="images/blocks/cleanroom.png" />
+    <Resource Include="images\blocks\cobblestone.png" LogicalName="images/blocks/cobblestone.png" />
+    <Resource Include="images\blocks\commandblock.png" LogicalName="images/blocks/commandblock.png" />
+    <Resource Include="images\blocks\egg.png" LogicalName="images/blocks/egg.png" />
+    <Resource Include="images\blocks\fabric.png" LogicalName="images/blocks/fabric.png" />
+    <Resource Include="images\blocks\goldblock.png" LogicalName="images/blocks/goldblock.png" />
+    <Resource Include="images\blocks\grass.png" LogicalName="images/blocks/grass.png" />
+    <Resource Include="images\blocks\grasspath.png" LogicalName="images/blocks/grasspath.png" />
+    <Resource Include="images\blocks\labymod.png" LogicalName="images/blocks/labymod.png" />
+    <Resource Include="images\blocks\neoforge.png" LogicalName="images/blocks/neoforge.png" />
+    <Resource Include="images\blocks\optifabric.png" LogicalName="images/blocks/optifabric.png" />
+    <Resource Include="images\blocks\quilt.png" LogicalName="images/blocks/quilt.png" />
+    <Resource Include="images\blocks\redstoneblock.png" LogicalName="images/blocks/redstoneblock.png" />
+    <Resource Include="images\blocks\redstonelampoff.png" LogicalName="images/blocks/redstonelampoff.png" />
+    <Resource Include="images\blocks\redstonelampon.png" LogicalName="images/blocks/redstonelampon.png" />
+    <Resource Include="images\heads\bangbang93.png" LogicalName="images/heads/bangbang93.png" />
+    <Resource Include="images\heads\easytier.png" LogicalName="images/heads/easytier.png" />
+    <Resource Include="images\heads\emperormummy.png" LogicalName="images/heads/emperormummy.png" />
+    <Resource Include="images\heads\logo-ce.png" LogicalName="images/heads/logo-ce.png" />
+    <Resource Include="images\heads\logo.png" LogicalName="images/heads/logo.png" />
+    <Resource Include="images\heads\ltcat.jpg" LogicalName="images/heads/ltcat.jpg" />
+    <Resource Include="images\heads\pcl-community.png" LogicalName="images/heads/pcl-community.png" />
+    <Resource Include="images\heads\pysio.jpg" LogicalName="images/heads/pysio.jpg" />
+    <Resource Include="images\heads\wiki.png" LogicalName="images/heads/wiki.png" />
+    <Resource Include="images\heads\yunmoan.jpg" LogicalName="images/heads/yunmoan.jpg" />
+    <Resource Include="images\heads\z0z0r4.png" LogicalName="images/heads/z0z0r4.png" />
+    <Resource Include="images\heads\stu_lian.jpg" LogicalName="images/heads/stu_lian.jpg" />
+    <Resource Include="images\icon.ico" LogicalName="images/icon.ico" />
+    <Resource Include="images\icon.png" LogicalName="images/icon.png" />
+    <Resource Include="images\splash.png" LogicalName="images/splash.png" />
+    <Resource Include="images\icons\a.png" LogicalName="images/icons/a.png" />
+    <Resource Include="images\icons\b.png" LogicalName="images/icons/b.png" />
+    <Resource Include="images\icons\defaultserver.png" LogicalName="images/icons/defaultserver.png" />
+    <Resource Include="images\icons\disabled.png" LogicalName="images/icons/disabled.png" />
+    <Resource Include="images\icons\folder.png" LogicalName="images/icons/folder.png" />
+    <Resource Include="images\icons\noicon.png" LogicalName="images/icons/noicon.png" />
+    <Resource Include="images\icons\r.png" LogicalName="images/icons/r.png" />
+    <Resource Include="images\icons\unavailable.png" LogicalName="images/icons/unavailable.png" />
+    <Resource Include="images\skins\alex.png" LogicalName="images/skins/alex.png" />
+    <Resource Include="images\skins\ari.png" LogicalName="images/skins/ari.png" />
+    <Resource Include="images\skins\efe.png" LogicalName="images/skins/efe.png" />
+    <Resource Include="images\skins\kai.png" LogicalName="images/skins/kai.png" />
+    <Resource Include="images\skins\makena.png" LogicalName="images/skins/makena.png" />
+    <Resource Include="images\skins\noor.png" LogicalName="images/skins/noor.png" />
+    <Resource Include="images\skins\steve.png" LogicalName="images/skins/steve.png" />
+    <Resource Include="images\skins\sunny.png" LogicalName="images/skins/sunny.png" />
+    <Resource Include="images\skins\zuri.png" LogicalName="images/skins/zuri.png" />
+    <Resource Include="PCL\MapViewerAssets\index.html" LogicalName="MapViewerAssets/index.html" />
+    <Resource Include="PCL\MapViewerAssets\worker.js" LogicalName="MapViewerAssets/worker.js" />
+    <Resource Include="PCL\MapViewerAssets\mcseedmap.wasm" LogicalName="MapViewerAssets/mcseedmap.wasm" />
+    <Resource Include="PCL\MapViewerAssets\comlink.mjs" LogicalName="MapViewerAssets/comlink.mjs" />
+    <Resource Include="PCL\MapViewerAssets\btree192.dat" LogicalName="MapViewerAssets/btree192.dat" />
+    <Resource Include="PCL\MapViewerAssets\btree19.dat" LogicalName="MapViewerAssets/btree19.dat" />
+    <Resource Include="PCL\MapViewerAssets\btree20.dat" LogicalName="MapViewerAssets/btree20.dat" />
+    <Resource Include="PCL\MapViewerAssets\btree215.dat" LogicalName="MapViewerAssets/btree215.dat" />
+    <Resource Include="PCL\MapViewerAssets\btree262.dat" LogicalName="MapViewerAssets/btree262.dat" />
+    <Resource Include="PCL\MapViewerAssets\btree263.dat" LogicalName="MapViewerAssets/btree263.dat" />
+    <Resource Include="PCL\MapViewerAssets\btree264s3.dat" LogicalName="MapViewerAssets/btree264s3.dat" />
+    <Resource Include="PCL\MapViewerAssets\structures\abandoned_camp.png" LogicalName="MapViewerAssets/structures/abandoned_camp.png" />
+    <Resource Include="PCL\MapViewerAssets\structures\amethyst_geode.webp" LogicalName="MapViewerAssets/structures/amethyst_geode.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\ancient_city.webp" LogicalName="MapViewerAssets/structures/ancient_city.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\bastion_remnant.webp" LogicalName="MapViewerAssets/structures/bastion_remnant.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\buried_treasure.webp" LogicalName="MapViewerAssets/structures/buried_treasure.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\desert_pyramid.webp" LogicalName="MapViewerAssets/structures/desert_pyramid.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\desert_well.webp" LogicalName="MapViewerAssets/structures/desert_well.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\end_city_no_ship.webp" LogicalName="MapViewerAssets/structures/end_city_no_ship.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\end_city_ship.webp" LogicalName="MapViewerAssets/structures/end_city_ship.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\end_city.webp" LogicalName="MapViewerAssets/structures/end_city.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\end_gateway.webp" LogicalName="MapViewerAssets/structures/end_gateway.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\igloo.webp" LogicalName="MapViewerAssets/structures/igloo.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\jungle_temple.webp" LogicalName="MapViewerAssets/structures/jungle_temple.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\mineshaft.webp" LogicalName="MapViewerAssets/structures/mineshaft.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\nether_fortress.webp" LogicalName="MapViewerAssets/structures/nether_fortress.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\nether_fossil.png" LogicalName="MapViewerAssets/structures/nether_fossil.png" />
+    <Resource Include="PCL\MapViewerAssets\structures\ocean_monument.webp" LogicalName="MapViewerAssets/structures/ocean_monument.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\ocean_ruin.webp" LogicalName="MapViewerAssets/structures/ocean_ruin.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\pillager_outpost.webp" LogicalName="MapViewerAssets/structures/pillager_outpost.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\ruined_portal.webp" LogicalName="MapViewerAssets/structures/ruined_portal.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\shipwreck.webp" LogicalName="MapViewerAssets/structures/shipwreck.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\slime_chunks.webp" LogicalName="MapViewerAssets/structures/slime_chunks.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\spawn_point.webp" LogicalName="MapViewerAssets/structures/spawn_point.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\stronghold.webp" LogicalName="MapViewerAssets/structures/stronghold.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\swamp_hut.webp" LogicalName="MapViewerAssets/structures/swamp_hut.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\trail_ruin.webp" LogicalName="MapViewerAssets/structures/trail_ruin.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\trial_chambers.webp" LogicalName="MapViewerAssets/structures/trial_chambers.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\village.webp" LogicalName="MapViewerAssets/structures/village.webp" />
+    <Resource Include="PCL\MapViewerAssets\structures\woodland_mansion.webp" LogicalName="MapViewerAssets/structures/woodland_mansion.webp" />
+    <Resource Include="resources\font.ttf" LogicalName="resources/font.ttf" />
+    <Resource Include="resources\forge-installer.jar" LogicalName="resources/forge-installer.jar" />
+    <Resource Include="resources\hints\en-us.txt" LogicalName="resources/hints/en-us.txt" />
+    <Resource Include="resources\hints\zh-cn.txt" LogicalName="resources/hints/zh-cn.txt" />
+    <Resource Include="resources\java-wrapper.jar" LogicalName="resources/java-wrapper.jar" />
+    <Resource Include="resources\legacyfix.jar" LogicalName="resources/legacyfix.jar" />
+    <Resource Include="resources\linkd.exe" LogicalName="resources/linkd.exe" />
+    <Resource Include="resources\log4j2-debug.xml" LogicalName="resources/log4j2-debug.xml" />
+    <Resource Include="resources\log4j2-legacy-debug.xml" LogicalName="resources/log4j2-legacy-debug.xml" />
+    <Resource Include="resources\lwjgl-unsafe-agent.jar" LogicalName="resources/lwjgl-unsafe-agent.jar" />
+    <Resource Include="resources\markdown.xaml" LogicalName="resources/markdown.xaml" />
+    <Resource Include="resources\mcmod.buf" LogicalName="resources/mcmod.buf" />
+    <Resource Include="resources\oauth-complete.html" LogicalName="resources/oauth-complete.html" />
+    <Resource Include="resources\transformer.jar" LogicalName="resources/transformer.jar" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="PCL.Core\PCL2_CE_Release_x64.csproj" />
+    <Reference Include="Microsoft.Xaml.Behaviors"><HintPath>..\_bundle\Microsoft.Xaml.Behaviors.dll</HintPath></Reference>
+    <Reference Include="CommunityToolkit.Mvvm"><HintPath>..\_bundle\CommunityToolkit.Mvvm.dll</HintPath></Reference>
+    <Reference Include="Markdig.Wpf"><HintPath>..\_bundle\Markdig.Wpf.dll</HintPath></Reference>
+    <Reference Include="FluentValidation"><HintPath>..\_bundle\FluentValidation.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Data.Sqlite"><HintPath>..\_bundle\Microsoft.Data.Sqlite.dll</HintPath></Reference>
+    <Reference Include="protobuf-net.Core"><HintPath>..\_bundle\protobuf-net.Core.dll</HintPath></Reference>
+    <Reference Include="fNbt"><HintPath>..\_bundle\fNbt.dll</HintPath></Reference>
+    <Reference Include="NAudio.WinMM"><HintPath>..\_bundle\NAudio.WinMM.dll</HintPath></Reference>
+    <Reference Include="NAudio"><HintPath>..\_bundle\NAudio.dll</HintPath></Reference>
+    <Reference Include="DotNet.Glob"><HintPath>..\_bundle\DotNet.Glob.dll</HintPath></Reference>
+    <Reference Include="Downloader"><HintPath>..\_bundle\Downloader.dll</HintPath></Reference>
+    <Reference Include="Sentry"><HintPath>..\_bundle\Sentry.dll</HintPath></Reference>
+    <Reference Include="protobuf-net"><HintPath>..\_bundle\protobuf-net.dll</HintPath></Reference>
+    <Reference Include="Dapper"><HintPath>..\_bundle\Dapper.dll</HintPath></Reference>
+    <Reference Include="Humanizer"><HintPath>..\_bundle\Humanizer.dll</HintPath></Reference>
+    <Reference Include="NAudio.Core"><HintPath>..\_bundle\NAudio.Core.dll</HintPath></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Ae.Dns.Client"><HintPath>..\_bundle\Ae.Dns.Client.dll</HintPath></Reference>
+    <Reference Include="Ae.Dns.Protocol"><HintPath>..\_bundle\Ae.Dns.Protocol.dll</HintPath></Reference>
+    <Reference Include="DTLS"><HintPath>..\_bundle\DTLS.dll</HintPath></Reference>
+    <Reference Include="ICSharpCode.SharpZipLib"><HintPath>..\_bundle\ICSharpCode.SharpZipLib.dll</HintPath></Reference>
+    <Reference Include="LiteDB"><HintPath>..\_bundle\LiteDB.dll</HintPath></Reference>
+    <Reference Include="Markdig"><HintPath>..\_bundle\Markdig.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Bcl.Cryptography"><HintPath>..\_bundle\Microsoft.Bcl.Cryptography.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Configuration"><HintPath>..\_bundle\Microsoft.Extensions.Configuration.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Abstractions"><HintPath>..\_bundle\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Configuration.Binder"><HintPath>..\_bundle\Microsoft.Extensions.Configuration.Binder.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection"><HintPath>..\_bundle\Microsoft.Extensions.DependencyInjection.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions"><HintPath>..\_bundle\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Diagnostics"><HintPath>..\_bundle\Microsoft.Extensions.Diagnostics.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Diagnostics.Abstractions"><HintPath>..\_bundle\Microsoft.Extensions.Diagnostics.Abstractions.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Http"><HintPath>..\_bundle\Microsoft.Extensions.Http.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Logging"><HintPath>..\_bundle\Microsoft.Extensions.Logging.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Logging.Abstractions"><HintPath>..\_bundle\Microsoft.Extensions.Logging.Abstractions.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Options"><HintPath>..\_bundle\Microsoft.Extensions.Options.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Options.ConfigurationExtensions"><HintPath>..\_bundle\Microsoft.Extensions.Options.ConfigurationExtensions.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Extensions.Primitives"><HintPath>..\_bundle\Microsoft.Extensions.Primitives.dll</HintPath></Reference>
+    <Reference Include="Microsoft.IdentityModel.Abstractions"><HintPath>..\_bundle\Microsoft.IdentityModel.Abstractions.dll</HintPath></Reference>
+    <Reference Include="Microsoft.IdentityModel.JsonWebTokens"><HintPath>..\_bundle\Microsoft.IdentityModel.JsonWebTokens.dll</HintPath></Reference>
+    <Reference Include="Microsoft.IdentityModel.Logging"><HintPath>..\_bundle\Microsoft.IdentityModel.Logging.dll</HintPath></Reference>
+    <Reference Include="Microsoft.IdentityModel.Tokens"><HintPath>..\_bundle\Microsoft.IdentityModel.Tokens.dll</HintPath></Reference>
+    <Reference Include="Microsoft.VisualStudio.Threading"><HintPath>..\_bundle\Microsoft.VisualStudio.Threading.dll</HintPath></Reference>
+    <Reference Include="Microsoft.VisualStudio.Validation"><HintPath>..\_bundle\Microsoft.VisualStudio.Validation.dll</HintPath></Reference>
+    <Reference Include="NAudio.Asio"><HintPath>..\_bundle\NAudio.Asio.dll</HintPath></Reference>
+    <Reference Include="NAudio.Midi"><HintPath>..\_bundle\NAudio.Midi.dll</HintPath></Reference>
+    <Reference Include="NAudio.Wasapi"><HintPath>..\_bundle\NAudio.Wasapi.dll</HintPath></Reference>
+    <Reference Include="NAudio.WinForms"><HintPath>..\_bundle\NAudio.WinForms.dll</HintPath></Reference>
+    <Reference Include="Pipelines.Extensions"><HintPath>..\_bundle\Pipelines.Extensions.dll</HintPath></Reference>
+    <Reference Include="PlainToolkit.CngProtectedData"><HintPath>..\_bundle\PlainToolkit.CngProtectedData.dll</HintPath></Reference>
+    <Reference Include="Polly"><HintPath>..\_bundle\Polly.dll</HintPath></Reference>
+    <Reference Include="Polly.Core"><HintPath>..\_bundle\Polly.Core.dll</HintPath></Reference>
+    <Reference Include="Socks5"><HintPath>..\_bundle\Socks5.dll</HintPath></Reference>
+    <Reference Include="SQLitePCLRaw.batteries_v2"><HintPath>..\_bundle\SQLitePCLRaw.batteries_v2.dll</HintPath></Reference>
+    <Reference Include="SQLitePCLRaw.core"><HintPath>..\_bundle\SQLitePCLRaw.core.dll</HintPath></Reference>
+    <Reference Include="SQLitePCLRaw.provider.e_sqlite3"><HintPath>..\_bundle\SQLitePCLRaw.provider.e_sqlite3.dll</HintPath></Reference>
+    <Reference Include="STUN"><HintPath>..\_bundle\STUN.dll</HintPath></Reference>
+    <Reference Include="System.IdentityModel.Tokens.Jwt"><HintPath>..\_bundle\System.IdentityModel.Tokens.Jwt.dll</HintPath></Reference>
+    <Reference Include="System.Management"><HintPath>..\_bundle\System.Management.dll</HintPath></Reference>
+    <Reference Include="System.Runtime.Caching"><HintPath>..\_bundle\System.Runtime.Caching.dll</HintPath></Reference>
+    <Reference Include="Wacton.Unicolour"><HintPath>..\_bundle\Wacton.Unicolour.dll</HintPath></Reference>
+    <Reference Include="YamlDotNet"><HintPath>..\_bundle\YamlDotNet.dll</HintPath></Reference>
+    <Reference Include="Microsoft.Windows.SDK.NET"><HintPath>..\_bundle\Microsoft.Windows.SDK.NET.dll</HintPath></Reference>
+    <Reference Include="WinRT.Runtime"><HintPath>..\_bundle\WinRT.Runtime.dll</HintPath></Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\_bundle\e_sqlite3.dll" Link="e_sqlite3.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\_bundle\dtls_native.dll" Link="dtls_native.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="..\_bundle\DTLS.dll" Link="DTLS.dll" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

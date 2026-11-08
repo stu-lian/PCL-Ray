@@ -1,0 +1,50 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using PCL.Core.UI.Animation.Animatable;
+
+namespace PCL.Core.UI.Animation.Core;
+
+public abstract class AnimationBase : DependencyObject, IAnimation
+{
+	private volatile int _status;
+
+	public string Name { get; set; } = string.Empty;
+
+	public AnimationStatus Status
+	{
+		get
+		{
+			return (AnimationStatus)_status;
+		}
+		internal set
+		{
+			Interlocked.Exchange(ref _status, (int)value);
+		}
+	}
+
+	public abstract int CurrentFrame { get; set; }
+
+	public event EventHandler? Started;
+
+	public event EventHandler? Completed;
+
+	public abstract Task<IAnimation> RunAsync(IAnimatable target);
+
+	public abstract IAnimation RunFireAndForget(IAnimatable target);
+
+	public abstract void Cancel();
+
+	public abstract IAnimationFrame? ComputeNextFrame(IAnimatable target);
+
+	public void RaiseStarted()
+	{
+		Started?.Invoke(this, EventArgs.Empty);
+	}
+
+	public void RaiseCompleted()
+	{
+		Completed?.Invoke(this, EventArgs.Empty);
+	}
+}

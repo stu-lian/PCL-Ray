@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageToolsHardcoreReviver" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" PanScroll="{Binding ElementName=PanBack}">
+  <local:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Name="PanMain" Margin="25,10">
+      <local:MyHint Text="读取存档根目录的 level.dat，解除极限模式或复活死亡玩家。修改前会自动备份 level.dat。" Theme="Yellow" Margin="0,0,0,15" MinHeight="36" />
+      <local:MyCard Margin="0,0,0,15" Title="存档">
+        <StackPanel Margin="25,32,25,16">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <local:MyTextBox Height="28" x:Name="TextPath" IsReadOnly="True" HintText="选择存档里的 level.dat" />
+            <local:MyButton Height="35" Grid.Column="1" Text="选择 level.dat" Width="120" Margin="10,0,0,0" Click="BtnBrowse_Click" />
+            <local:MyButton Height="35" Grid.Column="2" Text="读取" Width="80" Margin="10,0,0,0" Click="BtnReload_Click" />
+          </Grid>
+          <TextBlock x:Name="LabInfo" Margin="0,10,0,0" Opacity="0.75" TextWrapping="Wrap" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="处理方式">
+        <StackPanel Margin="25,32,25,16">
+          <RadioButton x:Name="RadioUnlock" GroupName="Strategy" IsChecked="True" Margin="0,0,0,8" Content="解除极限模式并复活玩家（推荐）" />
+          <TextBlock Text="关闭 hardcore 标记，并把玩家状态恢复为生存、清除死亡状态。保留世界和建筑。" Opacity="0.65" Margin="22,0,0,14" TextWrapping="Wrap" FontSize="12" />
+          <RadioButton x:Name="RadioKeepHardcore" GroupName="Strategy" Margin="0,0,0,8" Content="保留极限模式，只复活玩家" />
+          <TextBlock Text="适合只想救回角色、仍想保留极限标记者。下次死亡依旧会锁档。" Opacity="0.65" Margin="22,0,0,14" TextWrapping="Wrap" FontSize="12" />
+          <RadioButton x:Name="RadioReset" GroupName="Strategy" Margin="0,0,0,8" Content="删除玩家数据，重新开始（保留世界）" />
+          <TextBlock Text="删除 level.dat 里的 Player 节点，进游戏后会以新角色出生。背包和等级会一起丢失。" Opacity="0.65" Margin="22,0,0,0" TextWrapping="Wrap" FontSize="12" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="保存">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock x:Name="LabStatus" Opacity="0.7" TextWrapping="Wrap" Margin="0,0,0,10" />
+          <StackPanel Orientation="Horizontal">
+            <local:MyButton Height="35" Text="应用并保存 level.dat" Width="200" ColorType="Highlight" Click="BtnSave_Click" />
+            <local:MyButton Height="35" Text="另存为" Width="110" Margin="12,0,0,0" Click="BtnSaveAs_Click" />
+          </StackPanel>
+        </StackPanel>
+      </local:MyCard>
+    </StackPanel>
+  </local:MyScrollViewer>
+</local:MyPageRight>

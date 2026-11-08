@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageToolsBeacon" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" PanScroll="{Binding ElementName=PanBack}">
+  <local:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Name="PanMain" Margin="25,10">
+      <local:MyHint Text="信标光束每叠加一层染色玻璃，颜色都会与下一层取平均。选择目标颜色和层数，自动算出最接近的玻璃叠放方案。" Theme="Blue" Margin="0,0,0,15" MinHeight="36" />
+      <local:MyCard Margin="0,0,0,15" Title="使用步骤">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock TextWrapping="Wrap" LineHeight="22">
+            <Run Text="1. " FontWeight="Bold" /><Run Text="先在下方用滑块或 HEX 输入框设定想要的光束颜色。" />
+            <LineBreak />
+            <Run Text="2. " FontWeight="Bold" /><Run Text="把信标建好并激活（基座 3×3 及以上，放上信标后点击选择增益）。" />
+            <LineBreak />
+            <Run Text="3. " FontWeight="Bold" /><Run Text="按“叠放方案”里从下往上的顺序，在信标正上方依次放置对应颜色的染色玻璃。" />
+            <LineBreak />
+            <Run Text="4. " FontWeight="Bold" /><Run Text="玻璃层数越多颜色越接近目标，但最多只能放 4 层，超过不会继续变化。" />
+          </TextBlock>
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="目标颜色">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock Text="HEX 颜色" Margin="0,0,0,6" Opacity="0.85" />
+          <local:MyTextBox Height="28" x:Name="TextHex" Width="200" HorizontalAlignment="Left" Text="#FF0000" MaxLength="7" TextChanged="TextHex_TextChanged" />
+          <TextBlock Text="叠放层数" Margin="0,14,0,6" Opacity="0.85" />
+          <StackPanel Orientation="Horizontal">
+            <local:MyComboBox Height="28" MaxDropDownHeight="360" Width="200" x:Name="ComboLayers" SelectionChanged="Option_Changed" />
+            <local:MyButton Height="35" Text="随机颜色" Width="110" Margin="14,0,0,0" Click="BtnRandom_Click" />
+          </StackPanel>
+          <Grid Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="56" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock Text="红" VerticalAlignment="Center" Width="20" />
+            <local:MySlider x:Name="SliderR" Grid.Column="1" MaxValue="255" Value="255" Margin="8,0" Change="Slider_Changed" />
+            <TextBlock x:Name="LabR" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="255" />
+            <TextBlock Grid.Row="1" Text="绿" VerticalAlignment="Center" Width="20" />
+            <local:MySlider x:Name="SliderG" Grid.Row="1" Grid.Column="1" MaxValue="255" Value="0" Margin="8,0" Change="Slider_Changed" />
+            <TextBlock x:Name="LabG" Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="0" />
+            <TextBlock Grid.Row="2" Text="蓝" VerticalAlignment="Center" Width="20" />
+            <local:MySlider x:Name="SliderB" Grid.Row="2" Grid.Column="1" MaxValue="255" Value="0" Margin="8,0" Change="Slider_Changed" />
+            <TextBlock x:Name="LabB" Grid.Row="2" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="0" />
+          </Grid>
+          <TextBlock x:Name="LabRecommend" Margin="0,12,0,0" Opacity="0.75" FontSize="12" TextWrapping="Wrap" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="颜色对比">
+        <StackPanel Margin="25,32,25,20">
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="20" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+              <TextBlock Text="目标颜色" Margin="0,0,0,6" />
+              <Border x:Name="TargetSwatch" Height="64" CornerRadius="6" />
+              <TextBlock x:Name="LabTarget" Margin="0,6,0,0" HorizontalAlignment="Center" FontFamily="Consolas" />
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+              <TextBlock Text="实际效果" Margin="0,0,0,6" />
+              <Border x:Name="ResultSwatch" Height="64" CornerRadius="6" />
+              <TextBlock x:Name="LabResult" Margin="0,6,0,0" HorizontalAlignment="Center" FontFamily="Consolas" />
+            </StackPanel>
+          </Grid>
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="叠放方案">
+        <StackPanel Margin="25,32,25,16">
+          <StackPanel x:Name="PanelLayers" />
+          <TextBlock x:Name="LabDelta" Margin="0,10,0,0" Opacity="0.7" TextWrapping="Wrap" />
+          <TextBlock Text="获取玻璃的指令：" Margin="0,12,0,4" FontSize="12" Opacity="0.7" />
+          <TextBox x:Name="TextCommands" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" MinHeight="90" Background="Transparent" BorderThickness="0" />
+          <local:MyButton Height="35" Text="复制全部指令" Width="140" HorizontalAlignment="Left" Margin="0,8,0,0" ColorType="Highlight" Click="BtnCopy_Click" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="快捷颜色">
+        <WrapPanel x:Name="PanelQuick" Margin="20,32,20,20" />
+      </local:MyCard>
+    </StackPanel>
+  </local:MyScrollViewer>
+</local:MyPageRight>

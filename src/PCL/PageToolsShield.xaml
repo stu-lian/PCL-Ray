@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageToolsShield" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" PanScroll="{Binding ElementName=PanBack}">
+  <local:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Name="PanMain" Margin="25,10">
+      <local:MyHint Text="选择底色，点击图案方块逐层叠加旗帜图案，实时预览并生成 1.21.5+ 组件语法与旧版 NBT 两套指令。" Theme="Blue" Margin="0,0,0,15" MinHeight="36" />
+      <local:MyCard Margin="0,0,0,15" Title="底色与名称">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock Text="底色" Margin="0,0,0,6" Opacity="0.85" />
+          <local:MyComboBox Height="28" Width="260" HorizontalAlignment="Left" MaxDropDownHeight="360" x:Name="ComboBase" SelectionChanged="ComboBase_Changed" />
+          <TextBlock Text="物品名称" Margin="0,14,0,6" Opacity="0.85" />
+          <local:MyTextBox Height="28" x:Name="TextName" HintText="留空则不修改名称" TextChanged="TextName_Changed" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="图案图层">
+        <StackPanel Margin="25,32,25,16">
+          <ListBox x:Name="ListLayers" MinHeight="160" MaxHeight="280" BorderThickness="0" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListLayers_SelectionChanged">
+            <ListBox.ItemTemplate>
+              <DataTemplate>
+                <Grid Height="34">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
+                  </Grid.ColumnDefinitions>
+                  <Border Width="14" Height="14" CornerRadius="2" Background="{Binding ColorBrush}" VerticalAlignment="Center" />
+                  <TextBlock Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center" TextWrapping="Wrap" Text="{Binding Description}" />
+                </Grid>
+              </DataTemplate>
+            </ListBox.ItemTemplate>
+          </ListBox>
+          <WrapPanel Margin="0,10,0,0">
+            <local:MyButton Height="35" Text="上移" Width="86" Margin="0,0,8,8" Click="BtnUp_Click" />
+            <local:MyButton Height="35" Text="下移" Width="86" Margin="0,0,8,8" Click="BtnDown_Click" />
+            <local:MyButton Height="35" Text="删除选中" Width="100" Margin="0,0,8,8" ColorType="Red" Click="BtnDelete_Click" />
+            <local:MyButton Height="35" Text="清空图层" Width="100" Margin="0,0,8,8" Click="BtnClear_Click" />
+          </WrapPanel>
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="添加图案">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock Text="图案" Margin="0,0,0,6" Opacity="0.85" />
+          <local:MyComboBox Height="28" Width="320" HorizontalAlignment="Left" MaxDropDownHeight="360" x:Name="ComboPattern" SelectionChanged="Pattern_Changed" />
+          <Grid Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="颜色" VerticalAlignment="Center" Margin="0,0,12,0" Opacity="0.85" />
+            <local:MyComboBox Height="28" Width="220" HorizontalAlignment="Left" Grid.Column="1" MaxDropDownHeight="360" x:Name="ComboColor" SelectionChanged="Pattern_Changed" />
+          </Grid>
+          <local:MyButton Height="35" Text="添加这层图案" Width="150" HorizontalAlignment="Left" Margin="0,14,0,0" ColorType="Highlight" Click="BtnAdd_Click" />
+          <TextBlock Text="也可以直接点击下面的图案方块快速添加：" Margin="0,16,0,8" Opacity="0.75" FontSize="12" TextWrapping="Wrap" />
+          <WrapPanel x:Name="PanelPatterns" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="预览">
+        <StackPanel Margin="25,32,25,20">
+          <Border Background="#FF202326" CornerRadius="6" Height="240" Padding="16" HorizontalAlignment="Left">
+            <Viewbox Stretch="Uniform">
+              <Canvas x:Name="PreviewCanvas" Width="80" Height="160" />
+            </Viewbox>
+          </Border>
+          <TextBlock x:Name="LabLayerCount" Margin="0,10,0,0" Opacity="0.6" FontSize="12" TextWrapping="Wrap" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="生成的指令">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock Text="1.21.5+ 组件语法" FontWeight="Bold" Margin="0,0,0,6" />
+          <TextBox x:Name="TextGive" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" MinHeight="48" Background="Transparent" BorderThickness="0" />
+          <local:MyButton Height="35" Text="复制组件指令" Width="140" HorizontalAlignment="Left" Margin="0,8,0,18" ColorType="Highlight" Click="BtnCopyGive_Click" />
+          <TextBlock Text="旧版本 NBT 语法（1.20.4 及以前）" FontWeight="Bold" Margin="0,0,0,6" />
+          <TextBox x:Name="TextLegacy" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" MinHeight="48" Background="Transparent" BorderThickness="0" />
+          <local:MyButton Height="35" Text="复制旧版指令" Width="140" HorizontalAlignment="Left" Margin="0,8,0,0" Click="BtnCopyLegacy_Click" />
+        </StackPanel>
+      </local:MyCard>
+    </StackPanel>
+  </local:MyScrollViewer>
+</local:MyPageRight>

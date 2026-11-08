@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<local:MyPageRight x:Class="PCL.PageToolsSummon" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:local="clr-namespace:PCL" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" PanScroll="{Binding ElementName=PanBack}">
+  <local:MyScrollViewer x:Name="PanBack" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+    <StackPanel Name="PanMain" Margin="25,10">
+      <local:MyHint Text="可视化配置实体 NBT，生成 /summon 指令。生成的是 1.21.5+ 组件语法；旧版本请把 equipment 换成 ArmorItems/HandItems。" Theme="Blue" Margin="0,0,0,15" MinHeight="36" />
+      <local:MyCard Margin="0,0,0,15" Title="实体与坐标">
+        <StackPanel Margin="25,32,25,16">
+          <TextBlock Text="分类" Margin="0,0,0,6" Opacity="0.85" />
+          <local:MyComboBox Height="28" MaxDropDownHeight="360" Width="300" HorizontalAlignment="Left" x:Name="ComboCategory" SelectionChanged="ComboCategory_SelectionChanged" />
+          <TextBlock Text="实体" Margin="0,12,0,6" Opacity="0.85" />
+          <local:MyComboBox Height="28" MaxDropDownHeight="360" Width="360" HorizontalAlignment="Left" x:Name="ComboEntity" SelectionChanged="ComboEntity_SelectionChanged" />
+          <TextBlock Text="坐标 X / Y / Z" Margin="0,12,0,6" Opacity="0.85" />
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <local:MyTextBox Height="28" x:Name="TextX" Text="~" Margin="0,0,8,0" TextChanged="TextPosition_TextChanged" />
+            <local:MyTextBox Height="28" x:Name="TextY" Grid.Column="1" Text="~" Margin="0,0,8,0" TextChanged="TextPosition_TextChanged" />
+            <local:MyTextBox Height="28" x:Name="TextZ" Grid.Column="2" Text="~" TextChanged="TextPosition_TextChanged" />
+          </Grid>
+          <TextBlock Text="名称" Margin="0,12,0,6" Opacity="0.85" />
+          <local:MyTextBox Height="28" x:Name="TextName" MaxLength="120" TextChanged="TextName_TextChanged" HintText="支持 § 颜色代码，留空则不加名称" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="属性">
+        <StackPanel Margin="25,32,25,16">
+          <WrapPanel>
+            <local:MyCheckBox x:Name="CheckNameVisible" Text="名称始终显示" Change="Option_Change" Height="22" Width="168" Margin="0,0,16,10" />
+            <local:MyCheckBox x:Name="CheckGlowing" Text="发光轮廓" Change="Option_Change" Height="22" Width="130" Margin="0,0,16,10" />
+            <local:MyCheckBox x:Name="CheckInvulnerable" Text="无敌" Change="Option_Change" Height="22" Width="100" Margin="0,0,16,10" />
+            <local:MyCheckBox x:Name="CheckNoAi" Text="无 AI" Change="Option_Change" Height="22" Width="100" Margin="0,0,16,10" />
+            <local:MyCheckBox x:Name="CheckSilent" Text="静音" Change="Option_Change" Height="22" Width="100" Margin="0,0,16,10" />
+            <local:MyCheckBox x:Name="CheckBaby" Text="幼体" Change="Option_Change" Height="22" Width="100" Margin="0,0,16,10" />
+          </WrapPanel>
+          <Grid Margin="0,8,0,0">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="16" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+              <TextBlock Text="着火秒数" Margin="0,0,0,6" Opacity="0.85" />
+              <local:MyTextBox Height="28" x:Name="TextFire" MaxLength="4" Text="0" TextChanged="TextNumber_TextChanged" />
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+              <TextBlock Text="最大生命值（0 = 不修改）" Margin="0,0,0,6" Opacity="0.85" TextWrapping="Wrap" />
+              <local:MyTextBox Height="28" x:Name="TextHealth" MaxLength="8" Text="0" TextChanged="TextNumber_TextChanged" />
+            </StackPanel>
+          </Grid>
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="装备（1.21.5+）">
+        <StackPanel Margin="25,32,25,16">
+          <Grid x:Name="GridEquipment">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="Auto" />
+              <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+          </Grid>
+          <TextBlock Text="填写物品 ID（例如 diamond_sword、diamond_chestplate），留空表示不装备。" Opacity="0.6" TextWrapping="Wrap" Margin="0,10,0,0" FontSize="12" />
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="乘客（可选）" CanSwap="True">
+        <StackPanel Margin="25,32,25,16">
+          <local:MyCheckBox x:Name="CheckPassenger" Text="让实体骑乘一个乘客" Change="Option_Change" Height="22" Margin="0,0,0,10" />
+          <TextBlock Text="乘客实体" Margin="0,0,0,6" Opacity="0.85" />
+          <local:MyTextBox Height="28" x:Name="TextPassenger" Text="chicken" TextChanged="TextPassenger_TextChanged" />
+          <TextBlock Text="乘客名称" Margin="0,12,0,6" Opacity="0.85" />
+          <local:MyTextBox Height="28" x:Name="TextPassengerName" TextChanged="TextPassenger_TextChanged" />
+          <WrapPanel Margin="0,12,0,0">
+            <local:MyCheckBox x:Name="CheckPassengerGlowing" Text="乘客发光" Change="Option_Change" Height="22" Width="130" Margin="0,0,16,8" />
+            <local:MyCheckBox x:Name="CheckPassengerNoAi" Text="乘客无 AI" Change="Option_Change" Height="22" Width="130" Margin="0,0,16,8" />
+          </WrapPanel>
+        </StackPanel>
+      </local:MyCard>
+      <local:MyCard Margin="0,0,0,15" Title="生成的指令">
+        <StackPanel Margin="25,32,25,16">
+          <TextBox x:Name="TextOutput" IsReadOnly="True" TextWrapping="Wrap" FontFamily="Consolas" MinHeight="80" Background="Transparent" BorderThickness="0" />
+          <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+            <local:MyButton Height="35" Click="BtnCopy_Click" Width="120" Text="复制指令" ColorType="Highlight" />
+          </StackPanel>
+        </StackPanel>
+      </local:MyCard>
+    </StackPanel>
+  </local:MyScrollViewer>
+</local:MyPageRight>
