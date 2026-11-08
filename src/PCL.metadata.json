@@ -1,10 +1,10 @@
 {
   "name": "Plain Craft Launcher Ray Edition",
   "version": {
-    "base": "2.01.1",
+    "base": "2.01.2",
     "upstream": "2.12.1",
     "suffix": "",
-    "code": 524
+    "code": 525
   },
   "licenses": [
     {

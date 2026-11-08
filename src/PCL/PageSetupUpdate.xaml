@@ -54,7 +54,7 @@
               <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <local:MyImage x:Name="ImgUpdateIcon" Source="pack://application:,,,/Images/icon.png" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBlock Name="TextUpdateName" Text="PCL Ray 2.01.1" FontWeight="Bold" FontSize="20" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            <TextBlock Name="TextUpdateName" Text="PCL Ray 2.01.2" FontWeight="Bold" FontSize="20" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
             <TextBlock Name="TextUpdateDesc" Text="by Stu_lian" FontSize="14" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
             <local:MyButton x:Name="BtnUpdate" Click="BtnUpdate_Click" Text="{DynamicResource Setup.Update.Install}" ColorType="Highlight" Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="85" Height="30" />
             <TextBlock Name="TextChangelog" Text="{DynamicResource Setup.Update.Changelog.Placeholder}" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="4" TextWrapping="Wrap" />
@@ -79,7 +79,7 @@
               <RowDefinition Height="20" />
             </Grid.RowDefinitions>
             <Image Source="pack://application:,,,/Images/icon.png" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Height="50" Width="50" HorizontalAlignment="Left" VerticalAlignment="Center" />
-            <TextBlock Name="TextCurrentVersion" Text="PCL Ray 2.01.1" FontWeight="Bold" FontSize="20" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            <TextBlock Name="TextCurrentVersion" Text="PCL Ray 2.01.2" FontWeight="Bold" FontSize="20" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
             <TextBlock Name="TextCurrentDesc" Text="{DynamicResource Setup.Update.Latest}" FontSize="14" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" />
             <local:MyButton x:Name="BtnCheckAgain" Click="BtnCheckAgain_OnClick" Text="{DynamicResource Setup.Update.CheckAgain}" ColorType="Highlight" Grid.Row="0" Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
             <local:MyButton x:Name="BtnChangelog" Click="BtnChangelog_Click" Text="{DynamicResource Setup.Update.Changelog.View}" ColorType="Normal" Grid.Row="0" Grid.RowSpan="2" Grid.Column="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
