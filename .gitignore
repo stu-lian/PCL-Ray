@@ -22,3 +22,4 @@ PCL2_CE_Release_x64.exe
 .env
 *.secret
 appsettings.local.json
+token.txt
